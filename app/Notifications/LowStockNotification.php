@@ -2,10 +2,12 @@
 
 namespace App\Notifications;
 
+use App\Filament\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Filament\Notifications\Notification as NotificationsNotification;
 
 class LowStockNotification extends Notification
 {
@@ -20,7 +22,7 @@ class LowStockNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['database', 'mail'];
+        return ['database', 'mail', 'filament'];
     }
 
     public function toMail($notifiable): MailMessage
@@ -33,7 +35,7 @@ class LowStockNotification extends Notification
             ->action('View Product', url('/admin/products/' . $this->product->id));
     }
 
-    public function toArray($notifiable): array
+    /* public function toArray($notifiable): array
     {
         return [
             'product_id' => $this->product->id,
@@ -41,5 +43,15 @@ class LowStockNotification extends Notification
             'quantity' => $this->product->quantity,
             'reorder_point' => $this->product->reorder_point,
         ];
+    } */
+
+    public function toDatabase($notifiable): array
+    {
+        return NotificationsNotification::make()
+            ->title('Low Stock Alert')
+            ->body("Product {$this->product->name} is running low on stock. Current quantity: {$this->product->quantity}, Reorder point: {$this->product->reorder_point}")
+            ->url(ProductResource::getUrl('edit',['record' => $this->product->id]))
+            ->toArray();
+
     }
 }

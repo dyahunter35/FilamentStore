@@ -148,16 +148,18 @@
   - **User Instructions**: Run `php artisan make:filament-resource WarehouseTransfer --tenant`.
 
 - [x] Step 15: Implement Inventory Reconciliation (Jard)
-  - **Task**: Create `InventoryReconciliation` model (date, status, notes) and a Filament Resource. Implement a feature where users can input actual stock counts, compare them with system counts, and generate adjustments.
+  - **Task**: Create models, migration, and Filament Resource for Inventory Reconciliation (Jard). Allow users to record physical counts, compare with system quantities, and adjust inventory accordingly. Implement logic to update product quantities after reconciliation is created or updated.
   - **Files**:
-    - `app/Models/InventoryReconciliation.php`: Model.
+    - `app/Models/InventoryReconciliation.php`: InventoryReconciliation model.
+    - `app/Models/InventoryReconciliationItem.php`: InventoryReconciliationItem model.
     - `database/migrations/*_create_inventory_reconciliations_table.php`: Migration.
-    - `app/Filament/Resources/InventoryReconciliationResource.php`: Resource.
-    - `app/Filament/Resources/InventoryReconciliationResource/Pages/CreateInventoryReconciliation.php`: Custom logic for reconciliation.
-  - **Step Dependencies**: Step 5
-  - **User Instructions**: Run `php artisan make:filament-resource InventoryReconciliation --tenant`. Design the form to allow bulk entry of product counts for reconciliation.
+    - `database/migrations/*_create_inventory_reconciliation_items_table.php`: Migration.
+    - `app/Filament/Resources/InventoryReconciliationResource.php`: Filament Resource.
+  - **Step Dependencies**: Step 14
+  - **User Instructions**: Use the Filament admin panel to perform inventory reconciliations. Product quantities will be updated automatically.
 
-- [ ] Step 16: Implement Reorder Points and Low Stock Alerts
+
+- [x] Step 16: Implement Reorder Points and Low Stock Alerts
   - **Task**: Create a Filament scheduled command or custom page to check product quantities against `reorder_point`. Generate Filament notifications for low stock items.
   - **Files**:
     - `app/Filament/Widgets/LowStockProducts.php`: A Filament widget to display low stock.
@@ -168,7 +170,7 @@
   - **User Instructions**: Run `php artisan make:filament-widget LowStockProducts --resource=ProductResource --table` and `php artisan make:notification LowStockNotification`. Add the command to `app/Console/Kernel.php` for scheduling.
 
 ## Expense and Revenue Tracking
-- [ ] Step 17: Create Expense Category and Expense Models
+- [x] Step 17: Create Expense Category and Expense Models
   - **Task**: Define `ExpenseCategory` (name, `branch_id`) and `Expense` (category_id, amount, date, description, `branch_id`) models. Generate migrations and Filament Resources. Include fields for daily branch and shipping expenses.
   - **Files**:
     - `app/Models/ExpenseCategory.php`: ExpenseCategory model.
@@ -187,7 +189,7 @@
     - `database/migrations/*_create_other_revenues_table.php`: Other revenues table.
     - `app/Filament/Resources/OtherRevenueResource.php`: Filament Resource.
   - **Step Dependencies**: Step 3
-  - **User Instructions**: Run `php artisan make:filament-resource OtherRevenue --tenant`.
+  - **User Instructions**: Run `php artisan make:filament-resource OtherRevenue`.
 
 ## Human Resources & Payroll
 - [ ] Step 19: Create Employee Model and Resource
@@ -197,7 +199,7 @@
     - `database/migrations/*_create_employees_table.php`: Employees table.
     - `app/Filament/Resources/EmployeeResource.php`: Filament Resource.
   - **Step Dependencies**: Step 3
-  - **User Instructions**: Run `php artisan make:filament-resource Employee --tenant`.
+  - **User Instructions**: Run `php artisan make:filament-resource Employee`.
 
 - [ ] Step 20: Implement Employee Attendance System
   - **Task**: Create `Attendance` model (employee_id, date, clock_in_time, clock_out_time, `branch_id`). Implement Filament Resource for manual attendance entry and basic reporting.
@@ -206,7 +208,7 @@
     - `database/migrations/*_create_attendances_table.php`: Attendances table.
     - `app/Filament/Resources/AttendanceResource.php`: Filament Resource.
   - **Step Dependencies**: Step 19
-  - **User Instructions**: Run `php artisan make:filament-resource Attendance --tenant`.
+  - **User Instructions**: Run `php artisan make:filament-resource Attendance`.
 
 - [ ] Step 21: Implement Employee Loans Management
   - **Task**: Create `EmployeeLoan` model (employee_id, amount, deduction_amount_per_month, remaining_amount, date_granted, `branch_id`). Implement Filament Resource for managing loans.
@@ -215,7 +217,7 @@
     - `database/migrations/*_create_employee_loans_table.php`: Employee loans table.
     - `app/Filament/Resources/EmployeeLoanResource.php`: Filament Resource.
   - **Step Dependencies**: Step 19
-  - **User Instructions**: Run `php artisan make:filament-resource EmployeeLoan --tenant`.
+  - **User Instructions**: Run `php artisan make:filament-resource EmployeeLoan`.
 
 - [ ] Step 22: Develop Payroll Calculation Logic (Base Salary, Deductions, Bonuses)
   - **Task**: Implement a mechanism (e.g., an Artisan command or a dedicated page) to calculate monthly salaries based on fixed salaries, attendance, deductions (including loan deductions), and bonuses.

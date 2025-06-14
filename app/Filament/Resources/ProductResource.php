@@ -152,4 +152,11 @@ class ProductResource extends Resource
     {
         return $query->where('branch_id', filament()->getTenant()->id);
     }
+
+    public static function getWidgets(): array
+    {
+        return [
+            \App\Filament\Resources\ProductResource\Widgets\LowStockProducts::class,
+        ];
+    }
 }

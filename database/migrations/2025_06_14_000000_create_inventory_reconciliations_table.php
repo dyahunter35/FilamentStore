@@ -19,7 +19,7 @@ return new class extends Migration
 
         Schema::create('inventory_reconciliation_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('inventory_reconciliation_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('inv_rec_id')->constrained('inventory_reconciliations')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->integer('system_quantity');
             $table->integer('actual_quantity');

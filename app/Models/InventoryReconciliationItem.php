@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class InventoryReconciliationItem extends Model
 {
     protected $fillable = [
-        'inventory_reconciliation_id',
+        'inv_rec_id',
         'product_id',
         'system_quantity',
         'actual_quantity',
@@ -18,7 +18,7 @@ class InventoryReconciliationItem extends Model
 
     public function inventoryReconciliation(): BelongsTo
     {
-        return $this->belongsTo(InventoryReconciliation::class);
+        return $this->belongsTo(InventoryReconciliation::class,'inv_rec_id');
     }
 
     public function product(): BelongsTo
