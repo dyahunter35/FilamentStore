@@ -19,6 +19,10 @@ class WarehouseTransferResource extends Resource
 
     protected static ?string $navigationGroup = 'Inventory Management';
 
+    // registe to tenancy
+    protected static bool $isScopedToTenant = false;
+
+
     public static function form(Form $form): Form
     {
         return $form

@@ -2,21 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Currency extends Model
+class Employee extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'symbol',
-        'code',
+        'position',
+        'salary',
+        'contact_info',
         'branch_id',
-        'buy_rate',
-        'sell_rate',
     ];
 
     public function branch(): BelongsTo

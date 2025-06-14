@@ -2,8 +2,9 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Tenancy\EditBranchProfile;
+use App\Filament\Pages\Tenancy\EditBranchProfiles;
 use App\Filament\Pages\Tenancy\RegisterBranch;
+use App\Filament\Widgets\ProfitLossChart;
 use App\Models\Branch;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -39,7 +40,7 @@ class AdminPanelProvider extends PanelProvider
             )
             ->tenantRegistration(RegisterBranch::class)
                 ->tenantProfile(
-                    EditBranchProfile::class // Your tenant profile page
+                    EditBranchProfiles::class // Your tenant profile page
                 )
 
 
@@ -52,6 +53,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                ProfitLossChart::class
             ])
             ->middleware([
                 EncryptCookies::class,

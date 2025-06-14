@@ -6,11 +6,11 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Pages\Tenancy\EditTenantProfile;
 
-class EditBranchProfile extends EditTenantProfile
+class EditBranchProfiles extends EditTenantProfile
 {
     public static function getLabel(): string
     {
-        return 'Branch profile';
+        return 'Branches profile';
     }
 
     public function form(Form $form): Form

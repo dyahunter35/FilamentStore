@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ExpenseResource\Pages;
-use App\Filament\Resources\ExpenseResource\RelationManagers;
-use App\Models\Expense;
+use App\Filament\Resources\ExchangeClientTransactionResource\Pages;
+use App\Filament\Resources\ExchangeClientTransactionResource\RelationManagers;
+use App\Models\ExchangeClientTransaction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ExpenseResource extends Resource
+class ExchangeClientTransactionResource extends Resource
 {
-    protected static ?string $model = Expense::class;
+    protected static ?string $model = ExchangeClientTransaction::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,20 +23,21 @@ class ExpenseResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('category_id')
-                    ->label('Category')
-                    ->relationship('category', 'name')
+                Forms\Components\Select::make('exchange_client_id')
+                    ->relationship('exchangeClient', 'name')
+                    ->required(),
+                Forms\Components\Select::make('currency_id')
+                    ->relationship('currency', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('amount')
                     ->numeric()
                     ->required(),
+                Forms\Components\Select::make('type')
+                    ->options(['buy' => 'Buy', 'sell' => 'Sell'])
+                    ->required(),
                 Forms\Components\DatePicker::make('date')
                     ->required(),
-                Forms\Components\Textarea::make('description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
                 Forms\Components\Select::make('branch_id')
-                    ->label('Branch')
                     ->relationship('branch', 'name')
                     ->required(),
             ]);
@@ -46,12 +47,12 @@ class ExpenseResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('category.name')->label('Category')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('amount')->sortable(),
-                Tables\Columns\TextColumn::make('date')->date()->sortable(),
-                Tables\Columns\TextColumn::make('description')->limit(30)->toggleable(),
-                Tables\Columns\TextColumn::make('branch.name')->label('Branch')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('exchangeClient.name')->label('Client'),
+                Tables\Columns\TextColumn::make('currency.name')->label('Currency'),
+                Tables\Columns\TextColumn::make('amount'),
+                Tables\Columns\TextColumn::make('type')->label('Type'),
+                Tables\Columns\TextColumn::make('date')->date(),
+                Tables\Columns\TextColumn::make('branch.name')->label('Branch'),
             ])
             ->filters([
                 //
@@ -76,10 +77,9 @@ class ExpenseResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListExpenses::route('/'),
-            'create' => Pages\CreateExpense::route('/create'),
-            'edit' => Pages\EditExpense::route('/{record}/edit'),
-            'report' => Pages\ExpenseReport::route('/report'),
+            'index' => Pages\ListExchangeClientTransactions::route('/'),
+            'create' => Pages\CreateExchangeClientTransaction::route('/create'),
+            'edit' => Pages\EditExchangeClientTransaction::route('/{record}/edit'),
         ];
     }
 }

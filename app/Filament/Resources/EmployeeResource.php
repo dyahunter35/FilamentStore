@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CurrencyResource\Pages;
-use App\Filament\Resources\CurrencyResource\RelationManagers;
-use App\Models\Currency;
+use App\Filament\Resources\EmployeeResource\Pages;
+use App\Filament\Resources\EmployeeResource\RelationManagers;
+use App\Models\Employee;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,13 +12,12 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Models\Branch;
 
-class CurrencyResource extends Resource
+class EmployeeResource extends Resource
 {
-    protected static ?string $model = Currency::class;
+    protected static ?string $model = Employee::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -26,27 +25,21 @@ class CurrencyResource extends Resource
             ->schema([
                 Forms\Components\Select::make('branch_id')
                     ->label('Branch')
-                    ->options(Branch::all()->pluck('name', 'id'))
+                    ->options(\App\Models\Branch::all()->pluck('name', 'id'))
                     ->required()
-                    ->hiddenOn('edit'), // Branch should not be changed after creation
+                    ->hiddenOn('edit'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('symbol')
+                Forms\Components\TextInput::make('position')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('code')
-                    ->required()
-                    ->unique(ignoreRecord: true)
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('buy_rate')
+                Forms\Components\TextInput::make('salary')
                     ->numeric()
-                    ->label('Buy Rate')
-                    ->nullable(),
-                Forms\Components\TextInput::make('sell_rate')
-                    ->numeric()
-                    ->label('Sell Rate')
-                    ->nullable(),
+                    ->required(),
+                Forms\Components\Textarea::make('contact_info')
+                    ->nullable()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -61,11 +54,10 @@ class CurrencyResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('symbol')
+                Tables\Columns\TextColumn::make('position')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('code')
-                    ->searchable()
+                Tables\Columns\TextColumn::make('salary')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -81,7 +73,6 @@ class CurrencyResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -100,29 +91,9 @@ class CurrencyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCurrencies::route('/'),
-            'create' => Pages\CreateCurrency::route('/create'),
-            'edit' => Pages\EditCurrency::route('/{record}/edit'),
+            'index' => Pages\ListEmployees::route('/'),
+            'create' => Pages\CreateEmployee::route('/create'),
+            'edit' => Pages\EditEmployee::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
-
-    // Add this method to make the resource tenant-aware
-    public static function getTenantModel(): ?string
-    {
-        return Branch::class;
-    }
-
-    // Add this method to associate the currency with the current tenant
-    protected static function mutateEloquentQueryToTenant(Builder $query): Builder
-    {
-        return $query->where('branch_id', filament()->getTenant()->id);
     }
 }

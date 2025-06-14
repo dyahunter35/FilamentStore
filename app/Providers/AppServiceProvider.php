@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Resource::scopeToTenant(false);
+        //Resource::scopeToTenant(false);
 
         // Register observers for inventory movement
         SalesInvoiceItem::observe(SalesInvoiceItemObserver::class);

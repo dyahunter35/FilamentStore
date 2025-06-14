@@ -182,7 +182,7 @@
   - **Step Dependencies**: Step 3
   - **User Instructions**: Run `php artisan make:filament-resource ExpenseCategory --tenant` and `php artisan make:filament-resource Expense --tenant`.
 
-- [ ] Step 18: Create Other Revenue Model and Resource
+- [x] Step 18: Create Other Revenue Model and Resource
   - **Task**: Define `OtherRevenue` model (amount, date, description, `branch_id`). Generate its migration and Filament Resource.
   - **Files**:
     - `app/Models/OtherRevenue.php`: OtherRevenue model.
@@ -192,7 +192,7 @@
   - **User Instructions**: Run `php artisan make:filament-resource OtherRevenue`.
 
 ## Human Resources & Payroll
-- [ ] Step 19: Create Employee Model and Resource
+- [x] Step 19: Create Employee Model and Resource
   - **Task**: Define `Employee` model (name, position, salary, contact_info, `branch_id`). Generate its migration and Filament Resource.
   - **Files**:
     - `app/Models/Employee.php`: Employee model.
@@ -201,7 +201,7 @@
   - **Step Dependencies**: Step 3
   - **User Instructions**: Run `php artisan make:filament-resource Employee`.
 
-- [ ] Step 20: Implement Employee Attendance System
+- [x] Step 20: Implement Employee Attendance System
   - **Task**: Create `Attendance` model (employee_id, date, clock_in_time, clock_out_time, `branch_id`). Implement Filament Resource for manual attendance entry and basic reporting.
   - **Files**:
     - `app/Models/Attendance.php`: Attendance model.
@@ -210,7 +210,7 @@
   - **Step Dependencies**: Step 19
   - **User Instructions**: Run `php artisan make:filament-resource Attendance`.
 
-- [ ] Step 21: Implement Employee Loans Management
+- [x] Step 21: Implement Employee Loans Management
   - **Task**: Create `EmployeeLoan` model (employee_id, amount, deduction_amount_per_month, remaining_amount, date_granted, `branch_id`). Implement Filament Resource for managing loans.
   - **Files**:
     - `app/Models/EmployeeLoan.php`: EmployeeLoan model.
@@ -219,7 +219,7 @@
   - **Step Dependencies**: Step 19
   - **User Instructions**: Run `php artisan make:filament-resource EmployeeLoan`.
 
-- [ ] Step 22: Develop Payroll Calculation Logic (Base Salary, Deductions, Bonuses)
+- [x] Step 22: Develop Payroll Calculation Logic (Base Salary, Deductions, Bonuses)
   - **Task**: Implement a mechanism (e.g., an Artisan command or a dedicated page) to calculate monthly salaries based on fixed salaries, attendance, deductions (including loan deductions), and bonuses.
   - **Files**:
     - `app/Models/Payroll.php`: Simple model to log generated payrolls (month, year, total_amount, `branch_id`).
@@ -230,8 +230,7 @@
   - **Step Dependencies**: Step 19, Step 20, Step 21
   - **User Instructions**: Run `php artisan make:livewire PayrollCalculator` and `php artisan make:filament-page GeneratePayroll`.
 
-## Multi-Currency & Financial Exchange
-- [ ] Step 23: Implement Multi-Currency Exchange Rate Management
+- [x] Step 23: Implement Multi-Currency Exchange Rate Management
   - **Task**: Add fields to the `Currency` model for `buy_rate` and `sell_rate`. Modify `CurrencyResource` to allow manual entry of these rates.
   - **Files**:
     - `database/migrations/*_add_exchange_rates_to_currencies_table.php`: Add columns to currencies table.
@@ -240,26 +239,25 @@
   - **Step Dependencies**: Step 8
   - **User Instructions**: Run `php artisan make:migration add_exchange_rates_to_currencies_table --table=currencies`.
 
-- [ ] Step 24: Implement Multi-Currency Transfer Log
+- [x] Step 24: Implement Multi-Currency Transfer Log
   - **Task**: Create `CurrencyTransfer` model (from_currency_id, to_currency_id, amount, converted_amount, exchange_rate_used, date, description, `branch_id`). Implement Filament Resource to log these transfers.
   - **Files**:
     - `app/Models/CurrencyTransfer.php`: CurrencyTransfer model.
     - `database/migrations/*_create_currency_transfers_table.php`: Currency transfers table.
     - `app/Filament/Resources/CurrencyTransferResource.php`: Filament Resource.
   - **Step Dependencies**: Step 8
-  - **User Instructions**: Run `php artisan make:filament-resource CurrencyTransfer --tenant`.
+  - **User Instructions**: Run `php artisan make:filament-resource CurrencyTransfer`.
 
-- [ ] Step 25: Implement Hard Currency Exchange Client Operations
+- [x] Step 25: Implement Hard Currency Exchange Client Operations
   - **Task**: Create `ExchangeClientTransaction` model (exchange_client_id, currency_id, amount, type (buy/sell), date, `branch_id`). Implement Filament Resource for recording these transactions.
   - **Files**:
     - `app/Models/ExchangeClientTransaction.php`: Model.
     - `database/migrations/*_create_exchange_client_transactions_table.php`: Migration.
     - `app/Filament/Resources/ExchangeClientTransactionResource.php`: Resource.
   - **Step Dependencies**: Step 8, Step 23
-  - **User Instructions**: Run `php artisan make:filament-resource ExchangeClientTransaction --tenant`.
+  - **User Instructions**: Run `php artisan make:filament-resource ExchangeClientTransaction`.
 
-## Sales & Point of Sale (POS)
-- [ ] Step 26: Design and Implement POS Interface
+- [x] Step 26: Design and Implement POS Interface
   - **Task**: Create a custom Filament Page or a Livewire component for the Point of Sale interface. This interface should allow quick product selection (via barcode scan or search), quantity adjustment, customer selection (permanent or one-time), and payment processing.
   - **Files**:
     - `app/Filament/Pages/Pos.php`: Custom Filament Page for POS.
@@ -268,15 +266,14 @@
   - **Step Dependencies**: Step 5, Step 7, Step 10
   - **User Instructions**: Run `php artisan make:filament-page Pos` and `php artisan make:livewire PosComponent`. Design the UI using Filament forms/tables/buttons.
 
-- [ ] Step 27: Integrate POS with Sales & Inventory
+- [x] Step 27: Integrate POS with Sales & Inventory
   - **Task**: Implement the backend logic for the POS. When a sale is completed, create a `SalesInvoice`, populate `SalesInvoiceItem`s, and decrement `Product` quantities, handling serial numbers.
   - **Files**:
     - `app/Http/Livewire/PosComponent.php`: Add logic for completing sales, creating invoices, and updating inventory.
     - `app/Models/SalesInvoice.php`: Potentially add a method for POS creation.
   - **Step Dependencies**: Step 10, Step 13, Step 26
 
-## Financial Reporting
-- [ ] Step 28: Develop Profit and Loss Statement Report
+- [x] Step 28: Develop Profit and Loss Statement Report
   - **Task**: Create a custom Filament Report or a Filament Widget to display Profit and Loss (P&L) based on sales, returns, expenses, and other revenues. Allow filtering by date range and branch.
   - **Files**:
     - `app/Filament/Widgets/ProfitLossChart.php`: Filament widget for P&L overview.
