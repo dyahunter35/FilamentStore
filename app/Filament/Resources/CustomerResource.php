@@ -99,6 +99,7 @@ class CustomerResource extends Resource
             'index' => Pages\ListCustomers::route('/'),
             'create' => Pages\CreateCustomer::route('/create'),
             'edit' => Pages\EditCustomer::route('/{record}/edit'),
+            'account-statement' => Pages\CustomerAccountStatement::route('/account-statement'),
         ];
     }
 

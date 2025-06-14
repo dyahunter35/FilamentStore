@@ -158,7 +158,6 @@
   - **Step Dependencies**: Step 14
   - **User Instructions**: Use the Filament admin panel to perform inventory reconciliations. Product quantities will be updated automatically.
 
-
 - [x] Step 16: Implement Reorder Points and Low Stock Alerts
   - **Task**: Create a Filament scheduled command or custom page to check product quantities against `reorder_point`. Generate Filament notifications for low stock items.
   - **Files**:
@@ -282,16 +281,18 @@
   - **Step Dependencies**: Step 9, Step 11, Step 12, Step 17, Step 18
   - **User Instructions**: Run `php artisan make:filament-widget ProfitLossChart` and `php artisan make:filament-page ProfitLossReport`.
 
-- [ ] Step 29: Implement Account Statement Reports for Customers and Suppliers
+- [x] Step 29: Implement Account Statement Reports for Customers and Suppliers
   - **Task**: Create custom Filament Pages or Livewire components to generate detailed account statements for selected customers and suppliers, showing invoices, payments, and returns.
   - **Files**:
-    - `app/Filament/Pages/CustomerAccountStatement.php`: Page for customer statements.
+    - `app/Filament/Resources/CustomerResource/Pages/CustomerAccountStatement.php`: Page for customer statements.
     - `app/Filament/Pages/SupplierAccountStatement.php`: Page for supplier statements.
     - `app/Http/Livewire/AccountStatementViewer.php`: Livewire component for rendering statements.
+    - `resources/views/filament/resources/customer-resource/pages/account-statement.blade.php`: View for customer statement page.
+    - `resources/views/filament/pages/supplier-account-statement.blade.php`: View for supplier statement page.
   - **Step Dependencies**: Step 7, Step 9, Step 11, Step 12
-  - **User Instructions**: Run `php artisan make:filament-page CustomerAccountStatement` and `php artisan make:filament-page SupplierAccountStatement`.
+  - **User Instructions**: Run `php artisan make:filament-page CustomerAccountStatement` and `php artisan make:filament-page SupplierAccountStatement`. Create `php artisan make:livewire AccountStatementViewer`.
 
-- [ ] Step 30: Develop Inventory Reports
+- [x] Step 30: Develop Inventory Reports
   - **Task**: Create Filament Reports or Widgets to show inventory value, stock levels, and movement history.
   - **Files**:
     - `app/Filament/Pages/InventoryReport.php`: Page for detailed inventory reports.

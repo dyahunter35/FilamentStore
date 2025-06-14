@@ -36,7 +36,7 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->tenant(
-                Branch::class // Your tenant model
+                Branch::class,'name' // Your tenant model
             )
             ->tenantRegistration(RegisterBranch::class)
                 ->tenantProfile(
@@ -48,12 +48,14 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                \App\Filament\Pages\InventoryReport::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
-                ProfitLossChart::class
+                ProfitLossChart::class,
+                \App\Filament\Widgets\InventoryOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,
