@@ -60,7 +60,7 @@
   - **Step Dependencies**: Step 5
   - **User Instructions**: Run `php artisan make:migration add_barcode_to_products_table --table=products`. Consider installing a barcode generation package if automated generation is desired (e.g., `composer require milon/barcode`).
 
-- [ ] Step 7: Create Customer and Supplier Models and Resources
+- [x] Step 7: Create Customer and Supplier Models and Resources
   - **Task**: Define `Customer` and `Supplier` models (with common fields like name, phone, address, email, `branch_id`). Generate their migrations and Filament Resources.
   - **Files**:
     - `app/Models/Customer.php`: Customer model.
@@ -70,9 +70,9 @@
     - `database/migrations/*_create_suppliers_table.php`: Suppliers table migration.
     - `app/Filament/Resources/SupplierResource.php`: Filament Resource for Suppliers.
   - **Step Dependencies**: Step 3
-  - **User Instructions**: Run `php artisan make:filament-resource Customer --tenant` and `php artisan make:filament-resource Supplier --tenant`.
+  - **User Instructions**: Run `php artisan make:filament-resource Customer` and `php artisan make:filament-resource Supplier`. Manually add tenant awareness to the models and resources.
 
-- [ ] Step 8: Create Currency Model and Exchange Client Model
+- [x] Step 8: Create Currency Model and Exchange Client Model
   - **Task**: Define `Currency` model (name, symbol, code, `branch_id`) and `ExchangeClient` model (name, phone, `branch_id`). Generate their migrations and Filament Resources.
   - **Files**:
     - `app/Models/Currency.php`: Currency model.
@@ -82,19 +82,19 @@
     - `database/migrations/*_create_exchange_clients_table.php`: ExchangeClients table migration.
     - `app/Filament/Resources/ExchangeClientResource.php`: Filament Resource for ExchangeClients.
   - **Step Dependencies**: Step 3
-  - **User Instructions**: Run `php artisan make:filament-resource Currency --tenant` and `php artisan make:filament-resource ExchangeClient --tenant`.
+  - **User Instructions**: Run `php artisan make:filament-resource Currency` and `php artisan make:filament-resource ExchangeClient`. Manually add tenant awareness to the models and resources.
 
 ## Sales and Purchases Management
-- [ ] Step 9: Implement Sales Invoice Model and Resource
+- [x] Step 9: Implement Sales Invoice Model and Resource
   - **Task**: Define `SalesInvoice` model (customer_id, date, total_amount, discount, final_amount, status, `branch_id`). Create its migration and Filament Resource. Implement basic form fields.
   - **Files**:
     - `app/Models/SalesInvoice.php`: SalesInvoice model.
     - `database/migrations/*_create_sales_invoices_table.php`: Sales invoices table migration.
     - `app/Filament/Resources/SalesInvoiceResource.php`: Filament Resource for Sales Invoices.
   - **Step Dependencies**: Step 7
-  - **User Instructions**: Run `php artisan make:filament-resource SalesInvoice --tenant`.
+  - **User Instructions**: Run `php artisan make:filament-resource SalesInvoice`. Manually add tenant awareness.
 
-- [ ] Step 10: Implement Invoice Items and Product Selection
+- [x] Step 10: Implement Invoice Items and Product Selection
   - **Task**: Create `SalesInvoiceItem` model (sales_invoice_id, product_id, quantity, unit_price, subtotal). Add a Filament Repeater field to `SalesInvoiceResource` to allow adding multiple products to an invoice, linking to the `Product` model.
   - **Files**:
     - `app/Models/SalesInvoiceItem.php`: SalesInvoiceItem model.
@@ -103,7 +103,7 @@
   - **Step Dependencies**: Step 9, Step 5
   - **User Instructions**: Run `php artisan make:model SalesInvoiceItem -m`. Update migration. Modify `SalesInvoiceResource` form with Filament's `Repeater` field.
 
-- [ ] Step 11: Implement Purchase Invoice Model and Resource
+- [x] Step 11: Implement Purchase Invoice Model and Resource
   - **Task**: Define `PurchaseInvoice` model (supplier_id, date, total_amount, discount, final_amount, status, `branch_id`). Create its migration and Filament Resource. Implement basic form fields and invoice items similar to sales invoices.
   - **Files**:
     - `app/Models/PurchaseInvoice.php`: PurchaseInvoice model.
@@ -112,9 +112,9 @@
     - `app/Models/PurchaseInvoiceItem.php`: PurchaseInvoiceItem model.
     - `database/migrations/*_create_purchase_invoice_items_table.php`: Purchase invoice items migration.
   - **Step Dependencies**: Step 7, Step 5
-  - **User Instructions**: Run `php artisan make:filament-resource PurchaseInvoice --tenant`. Create `PurchaseInvoiceItem` model and migration.
+  - **User Instructions**: Run `php artisan make:filament-resource PurchaseInvoice`. Create `PurchaseInvoiceItem` model and migration. Manually add tenant awareness.
 
-- [ ] Step 12: Implement Sales and Purchase Returns
+- [x] Step 12: Implement Sales and Purchase Returns
   - **Task**: Create `SalesReturn` and `PurchaseReturn` models and migrations. Implement Filament Resources to record returns, linking to original invoices and updating inventory.
   - **Files**:
     - `app/Models/SalesReturn.php`: SalesReturn model.
@@ -124,31 +124,30 @@
     - `database/migrations/*_create_purchase_returns_table.php`: Purchase returns migration.
     - `app/Filament/Resources/PurchaseReturnResource.php`: Filament Resource.
   - **Step Dependencies**: Step 9, Step 11
-  - **User Instructions**: Run `php artisan make:filament-resource SalesReturn --tenant` and `php artisan make:filament-resource PurchaseReturn --tenant`.
+  - **User Instructions**: Run `php artisan make:filament-resource SalesReturn` and `php artisan make:filament-resource PurchaseReturn`. Manually add tenant awareness.
+
+- [x] Step 13: Implement Inventory Movement Logic
+  - **Task**: Create observers to automatically update product quantities based on sales, purchases, and returns.
+  - **Files**:
+    - `app/Observers/SalesInvoiceItemObserver.php`: Handle sales inventory changes
+    - `app/Observers/PurchaseInvoiceItemObserver.php`: Handle purchase inventory changes
+    - `app/Observers/SalesReturnObserver.php`: Handle sales return inventory changes
+    - `app/Observers/PurchaseReturnObserver.php`: Handle purchase return inventory changes
+    - `app/Providers/AppServiceProvider.php`: Register observers
+  - **Step Dependencies**: Step 9, Step 11, Step 12
+  - **User Instructions**: Run `php artisan make:observer` commands for each observer. Implement inventory movement logic in each observer and register them in AppServiceProvider.
 
 ## Inventory Management
-- [ ] Step 13: Implement Inventory Movement Logic (Sales/Purchases/Returns)
-  - **Task**: Develop observers or events to automatically update product quantities in the `products` table whenever `SalesInvoiceItem`, `PurchaseInvoiceItem`, `SalesReturn`, or `PurchaseReturn` records are created/updated. Handle serial number tracking for relevant products.
-  - **Files**:
-    - `app/Observers/SalesInvoiceItemObserver.php`: Observer for sales items.
-    - `app/Observers/PurchaseInvoiceItemObserver.php`: Observer for purchase items.
-    - `app/Observers/SalesReturnObserver.php`: Observer for sales returns.
-    - `app/Observers/PurchaseReturnObserver.php`: Observer for purchase returns.
-    - `app/Models/Product.php`: Add methods for quantity updates and serial number management.
-    - `app/Providers/AppServiceProvider.php`: Register observers.
-  - **Step Dependencies**: Step 5, Step 10, Step 12
-  - **User Instructions**: Generate observers: `php artisan make:observer SalesInvoiceItemObserver --model=SalesInvoiceItem`. Register them in `AppServiceProvider`.
-
-- [ ] Step 14: Implement Inter-Warehouse Transfers
-  - **Task**: Create a `WarehouseTransfer` model (from_branch_id, to_branch_id, product_id, quantity, date, status) and Filament Resource. Implement logic to decrement quantity from source branch and increment in destination branch upon completion.
+- [x] Step 14: Implement Inter-Warehouse Transfers
+  - **Task**: Create `WarehouseTransfer` model (from_branch_id, to_branch_id, product_id, quantity, date, status) and its Filament Resource. Include basic transfer workflow states.
   - **Files**:
     - `app/Models/WarehouseTransfer.php`: WarehouseTransfer model.
-    - `database/migrations/*_create_warehouse_transfers_table.php`: Warehouse transfers migration.
-    - `app/Filament/Resources/WarehouseTransferResource.php`: Filament Resource.
+    - `database/migrations/*_create_warehouse_transfers_table.php`: Transfers table.
+    - `app/Filament/Resources/WarehouseTransferResource.php`: Resource.
   - **Step Dependencies**: Step 3, Step 5
   - **User Instructions**: Run `php artisan make:filament-resource WarehouseTransfer --tenant`.
 
-- [ ] Step 15: Implement Inventory Reconciliation (Jard)
+- [x] Step 15: Implement Inventory Reconciliation (Jard)
   - **Task**: Create `InventoryReconciliation` model (date, status, notes) and a Filament Resource. Implement a feature where users can input actual stock counts, compare them with system counts, and generate adjustments.
   - **Files**:
     - `app/Models/InventoryReconciliation.php`: Model.

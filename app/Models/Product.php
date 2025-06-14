@@ -30,4 +30,20 @@ class Product extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+    public function isLowStock(): bool
+    {
+        return $this->quantity <= $this->reorder_point;
+    }
+
+    public function getStockStatus(): string
+    {
+        if ($this->quantity <= 0) {
+            return 'out_of_stock';
+        }
+        if ($this->isLowStock()) {
+            return 'low_stock';
+        }
+        return 'in_stock';
+    }
 }

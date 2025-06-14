@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Tenancy\EditBranchProfile;
 use App\Filament\Pages\Tenancy\RegisterBranch;
 use App\Models\Branch;
 use Filament\Http\Middleware\Authenticate;
@@ -38,7 +39,7 @@ class AdminPanelProvider extends PanelProvider
             )
             ->tenantRegistration(RegisterBranch::class)
                 ->tenantProfile(
-                    'App\\Filament\\Pages\\Tenancy\\EditBranchProfile' // Your tenant profile page
+                    EditBranchProfile::class // Your tenant profile page
                 )
 
 
