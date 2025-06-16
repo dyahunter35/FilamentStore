@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PurchaseReturnResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+    
     protected static ?string $model = PurchaseReturn::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-uturn-right';

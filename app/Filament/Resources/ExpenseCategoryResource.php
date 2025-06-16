@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ExpenseCategoryResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = ExpenseCategory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

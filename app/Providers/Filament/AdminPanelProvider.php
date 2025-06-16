@@ -73,8 +73,8 @@ class AdminPanelProvider extends PanelProvider
                 InventoryOverview::class,
 
                 // System Widgets
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                //Widgets\AccountWidget::class,
+                //Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -103,11 +103,8 @@ class AdminPanelProvider extends PanelProvider
                         'default' => 1,
                         'sm' => 2,
                     ]),
+            ])->plugin(\TomatoPHP\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin::make())
 
-                SpatieLaravelTranslatablePlugin::make()
-                    ->defaultLocales(['ar', 'en']),
-
-            ])
             ->authMiddleware([
                 Authenticate::class,
             ]);

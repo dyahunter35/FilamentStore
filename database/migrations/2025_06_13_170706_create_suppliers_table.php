@@ -12,12 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('suppliers', function (Blueprint $table) {
+            
             $table->id();
-            $table->foreignId('branch_id')->nullable()->constrained('branches')->cascadeOnDelete();
             $table->string('name');
             $table->string('phone')->nullable();
+            $table->string('company');
+            $table->string('contact_person')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('tax_number')->nullable();
+            $table->string('payment_terms')->nullable();
+            $table->decimal('credit_limit', 15, 2)->default(0.00);
+            $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
             $table->text('address')->nullable();
             $table->string('email')->nullable();
+
             $table->timestamps();
         });
     }

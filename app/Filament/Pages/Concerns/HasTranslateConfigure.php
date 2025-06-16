@@ -62,7 +62,7 @@ trait HasTranslateConfigure
                     ->snake();
 
                 if (method_exists($entry, 'label')) {
-                    if ($localeLabel = static::getSmartTranslation('form.' . $label . '.label')) {
+                    if ($localeLabel = static::getSmartTranslation('fields.' . $label . '.label')) {
                         $entry->label($localeLabel);
                     }
                 }
@@ -76,7 +76,7 @@ trait HasTranslateConfigure
                         ->replaceLast(' id', ' ')
                         ->snake();
 
-                    if ($localeHeading = static::getSmartTranslation('form.' . $name . '.heading')) {
+                    if ($localeHeading = static::getSmartTranslation('fields.' . $name . '.heading')) {
                         $entry->label($localeHeading);
                     }
                 }
@@ -97,7 +97,7 @@ trait HasTranslateConfigure
                 $heading = $component->getHeading();
                 if ($heading) {
                     $cleanHeading = (string) str($heading)->snake();
-                    if ($localeHeading = static::getSmartTranslation('form.' . $cleanHeading . '.label')) {
+                    if ($localeHeading = static::getSmartTranslation('fields.' . $cleanHeading . '.label')) {
                         $component->heading($localeHeading);
                     }
 
@@ -113,12 +113,12 @@ trait HasTranslateConfigure
                 $label = $component->getLabel();
                 if ($label) {
                     $cleanLabel = (string) str($label)->snake();
-                    if ($localeLabel = static::getSmartTranslation('form.' . $cleanLabel . '.label')) {
+                    if ($localeLabel = static::getSmartTranslation('fields.' . $cleanLabel . '.label')) {
                         $component->label($localeLabel);
                     }
 
                     // Also look for a description
-                    if (method_exists($component, 'getDescription') && $description = static::getSmartTranslation('form.' . $cleanLabel . '.description')) {
+                    if (method_exists($component, 'getDescription') && $description = static::getSmartTranslation('fields.' . $cleanLabel . '.description')) {
                         $component->description($description);
                     }
                 }
@@ -135,20 +135,20 @@ trait HasTranslateConfigure
                     ->snake();
 
                 if (method_exists($component, 'label')) {
-                    if ($localeLabel = static::getSmartTranslation('form.' . $label . '.label')) {
+                    if ($localeLabel = static::getSmartTranslation('fields.' . $label . '.label')) {
                         $component->label($localeLabel);
                     }
                 }
 
-                if (method_exists($component, 'placeholder') && $locale_placeholder = static::getSmartTranslation('form.' . $label . '.placeholder')) {
+                if (method_exists($component, 'placeholder') && $locale_placeholder = static::getSmartTranslation('fields.' . $label . '.placeholder')) {
                     $component->placeholder($locale_placeholder);
                 }
 
-                if (method_exists($component, 'description') && $locale_description = static::getSmartTranslation('form.' . $label . '.description')) {
+                if (method_exists($component, 'description') && $locale_description = static::getSmartTranslation('fields.' . $label . '.description')) {
                     $component->description($locale_description);
                 }
 
-                if (method_exists($component, 'helperText') && filled($helperText = static::getSmartTranslation('form.' . $label . '.helper_text'))) {
+                if (method_exists($component, 'helperText') && filled($helperText = static::getSmartTranslation('fields.' . $label . '.helper_text'))) {
                     $component->helperText($helperText);
                 }
 
@@ -158,7 +158,7 @@ trait HasTranslateConfigure
                     if (is_array($options)) {
                         $translatedOptions = [];
                         foreach ($options as $key => $value) {
-                            $optionKey = 'form.' . $label . '.' . $key;
+                            $optionKey = 'fields.' . $label . '.' . $key;
                             $translatedOptions[$key] = static::getSmartTranslation($optionKey) ?? $value;
                         }
                         $component->options($translatedOptions);
@@ -167,7 +167,7 @@ trait HasTranslateConfigure
 
                 // Handle Repeater specific add action label
                 if ($component instanceof Repeater && method_exists($component, 'addActionLabel')) {
-                    $addActionKey = 'form.' . $label . '.add_more';
+                    $addActionKey = 'fields.' . $label . '.add_more';
                     if ($addActionLabel = static::getSmartTranslation($addActionKey)) {
                         $component->addActionLabel($addActionLabel);
                     }
@@ -182,11 +182,11 @@ trait HasTranslateConfigure
                     ->snake();
 
                 // Apply translations based on the name
-                if (method_exists($component, 'label') && $localeLabel = static::getSmartTranslation('form.' . $name . '.label')) {
+                if (method_exists($component, 'label') && $localeLabel = static::getSmartTranslation('fields.' . $name . '.label')) {
                     $component->label($localeLabel);
                 }
 
-                if (method_exists($component, 'helperText') && $helperText = static::getSmartTranslation('form.' . $name . '.helper_text')) {
+                if (method_exists($component, 'helperText') && $helperText = static::getSmartTranslation('fields.' . $name . '.helper_text')) {
                     $component->helperText($helperText);
                 }
             }
@@ -205,16 +205,16 @@ trait HasTranslateConfigure
                 ->snake();
 
             if (method_exists($component, 'label')) {
-                if ($localeLabel = static::getSmartTranslation('form.' . $label . '.label')) {
+                if ($localeLabel = static::getSmartTranslation('fields.' . $label . '.label')) {
                     $component->label($localeLabel);
                 }
             }
 
-            if (method_exists($component, 'description') && $locale_description = static::getSmartTranslation('form.' . $label . '.description')) {
+            if (method_exists($component, 'description') && $locale_description = static::getSmartTranslation('fields.' . $label . '.description')) {
                 $component->description($locale_description);
             }
 
-            if (method_exists($component, 'prefix') && $locale_prefix = static::getSmartTranslation('form.' . $label . '.prefix')) {
+            if (method_exists($component, 'prefix') && $locale_prefix = static::getSmartTranslation('fields.' . $label . '.prefix')) {
                 $component->prefix($locale_prefix);
             }
         });
@@ -253,13 +253,13 @@ trait HasTranslateConfigure
                     $cleanLabel = (string) str($label)->snake();
 
                     // Add to strings array
-                    $strings['form'][$cleanLabel]['label'] = $label;
+                    $strings['fields'][$cleanLabel]['label'] = $label;
 
                     // Get helper text if available
                     if (method_exists($component, 'getHelperText')) {
                         $helperText = $component->getHelperText();
                         if ($helperText) {
-                            $strings['form'][$cleanLabel]['helper_text'] = $helperText;
+                            $strings['fields'][$cleanLabel]['helper_text'] = $helperText;
                         }
                     }
 
@@ -267,7 +267,7 @@ trait HasTranslateConfigure
                     // if (method_exists($component, 'getPlaceholder')) {
                     //     $placeholder = $component->getPlaceholder();
                     //     if ($placeholder) {
-                    //         $strings['form'][$cleanLabel]['placeholder'] = $placeholder;
+                    //         $strings['fields'][$cleanLabel]['placeholder'] = $placeholder;
                     //     }
                     // }
 
@@ -275,7 +275,7 @@ trait HasTranslateConfigure
                     if (method_exists($component, 'getDescription')) {
                         $description = $component->getDescription();
                         if ($description) {
-                            $strings['form'][$cleanLabel]['description'] = $description;
+                            $strings['fields'][$cleanLabel]['description'] = $description;
                         }
                     }
 
@@ -284,7 +284,7 @@ trait HasTranslateConfigure
                     //     $options = $component->getOptions();
                     //     if (is_array($options)) {
                     //         foreach ($options as $key => $value) {
-                    //             $strings['form'][$cleanLabel][$key] = $value;
+                    //             $strings['fields'][$cleanLabel][$key] = $value;
                     //         }
                     //     }
                     // }
@@ -296,12 +296,12 @@ trait HasTranslateConfigure
                 $heading = $component->getHeading();
                 if ($heading) {
                     $cleanHeading = (string) str($heading)->snake();
-                    $strings['form'][$cleanHeading]['label'] = $heading;
+                    $strings['fields'][$cleanHeading]['label'] = $heading;
 
                     if (method_exists($component, 'getDescription')) {
                         $description = $component->getDescription();
                         if ($description) {
-                            $strings['form'][$cleanHeading]['description'] = $description;
+                            $strings['fields'][$cleanHeading]['description'] = $description;
                         }
                     }
                 }
@@ -311,12 +311,12 @@ trait HasTranslateConfigure
                 $stepLabel = $component->getLabel();
                 if ($stepLabel) {
                     $cleanLabel = (string) str($stepLabel)->snake();
-                    $strings['form'][$cleanLabel]['label'] = $stepLabel;
+                    $strings['fields'][$cleanLabel]['label'] = $stepLabel;
 
                     if (method_exists($component, 'getDescription')) {
                         $description = $component->getDescription();
                         if ($description) {
-                            $strings['form'][$cleanLabel]['description'] = $description;
+                            $strings['fields'][$cleanLabel]['description'] = $description;
                         }
                     }
                 }

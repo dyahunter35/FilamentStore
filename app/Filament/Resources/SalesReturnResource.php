@@ -15,13 +15,14 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SalesReturnResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = SalesReturn::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-uturn-left';
 
     protected static ?int $navigationSort = 4;
 
-    protected static ?string $navigationGroup = 'Sales Management';
 
     public static function form(Form $form): Form
     {

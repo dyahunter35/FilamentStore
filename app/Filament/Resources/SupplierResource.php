@@ -16,36 +16,67 @@ use App\Models\Branch;
 
 class SupplierResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = Supplier::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
+    protected static bool $isScopedToTenant = false;
+
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
         return $form
             ->schema([
-                Forms\Components\Select::make('branch_id')
-                    ->label('Branch')
-                    ->options(Branch::all()->pluck('name', 'id'))
-                    ->required()
-                    ->hiddenOn('edit'), // Branch should not be changed after creation
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->nullable()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('address')
-                    ->nullable()
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->nullable()
-                    ->maxLength(255),
-            ]);
-    }
+                Forms\Components\Grid::make()
+                    ->schema([
 
+                        Forms\Components\Section::make(__('supplier.sections.base_information.title'))
+                            ->schema([
+
+
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('phone')
+                                    ->tel()
+                                    ->nullable()
+                                    ->maxLength(255),
+                                Forms\Components\Textarea::make('address')
+                                    ->nullable()
+                                    ->columnSpanFull(),
+                                Forms\Components\TextInput::make('email')
+                                    ->email()
+                                    ->nullable()
+                                    ->maxLength(255),
+
+                            ])
+                            ->columns(2),
+                        Forms\Components\Section::make(__('supplier.sections.contact_information.title'))
+                            ->schema([
+                                Forms\Components\TextInput::make('contact_person')
+                                    ->nullable()
+                                    ->maxLength(255),
+
+                                Forms\Components\TextInput::make('vat_number')
+                                    ->nullable()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('website')
+                                    ->url()
+                                    ->nullable()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('bank_account')
+                                    ->nullable()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('bank_name')
+                                    ->nullable()
+                                    ->maxLength(255),
+                            ])->columns(2),
+                    ])->columnSpan(2)
+
+            ])->columns(3);
+    }
     public static function table(Table $table): Table
     {
         return $table
@@ -61,6 +92,21 @@ class SupplierResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('contact_person')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('vat_number')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('website')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('bank_account')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('bank_name')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -111,13 +157,11 @@ class SupplierResource extends Resource
             ]);
     }
 
-    // Add this method to make the resource tenant-aware
     public static function getTenantModel(): ?string
     {
         return Branch::class;
     }
 
-    // Add this method to associate the supplier with the current tenant
     protected static function mutateEloquentQueryToTenant(Builder $query): Builder
     {
         return $query->where('branch_id', filament()->getTenant()->id);

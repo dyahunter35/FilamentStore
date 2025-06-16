@@ -61,7 +61,7 @@ trait HasResource
      */
     public static function getPluralModelLabel(): string
     {
-        return static::getLocale('label.plural_model_label') ?? parent::getPluralModelLabel();
+        return static::getLocale('navigation.plural_label') ?? parent::getPluralModelLabel();
     }
 
     /**
@@ -69,7 +69,7 @@ trait HasResource
      */
     public static function getModelLabel(): string
     {
-        return static::getLocale('label.model_label') ?? parent::getModelLabel();
+        return static::getLocale('navigation.model_label') ?? parent::getModelLabel();
     }
 
     /**
@@ -77,7 +77,7 @@ trait HasResource
      */
     public static function getNavigationGroup(): ?string
     {
-        return static::getLocale('navigation_group') ?? parent::getNavigationGroup();
+        return static::getLocale('navigation.group') ?? parent::getNavigationGroup();
     }
 
     /**

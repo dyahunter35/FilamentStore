@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Pages\Concerns\HasResource;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
@@ -13,64 +14,107 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Branch;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class ProductResource extends Resource
 {
+    use HasResource;
+
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
+
         return $form
             ->schema([
-                Forms\Components\Select::make('branch_id')
-                    ->label('Branch')
-                    ->options(Branch::all()->pluck('name', 'id'))
-                    ->required()
-                    ->hiddenOn('edit'), // Branch should not be changed after creation
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('price')
-                    ->required()
-                    ->numeric()
-                    ->prefix('$'),
-                Forms\Components\TextInput::make('cost')
-                    ->required()
-                    ->numeric()
-                    ->prefix('$'),
-                Forms\Components\TextInput::make('quantity')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('reorder_point')
-                    ->numeric()
-                    ->nullable(),
-                Forms\Components\TextInput::make('barcode')
-                    ->label('Barcode')
-                    ->unique(ignoreRecord: true)
-                    ->nullable()
-                    ->maxLength(255),
-                Forms\Components\Repeater::make('serial_numbers')
+                Forms\Components\Grid::make()
                     ->schema([
-                        Forms\Components\TextInput::make('serial_number'),
-                    ])
-                    ->nullable()
-                    ->columnSpanFull()
-                    ->createItemButtonLabel('Add Serial Number'),
-            ]);
+                        Forms\Components\Group::make()
+                            ->schema([
+
+                                Forms\Components\Section::make(__('product.sections.base_information.title'))
+                                    ->schema([
+
+                                        Forms\Components\TextInput::make('name')
+                                            ->required()
+                                            ->maxLength(255),
+                                        Forms\Components\Textarea::make('description')
+                                            ->maxLength(65535),
+
+                                        Forms\Components\Select::make('brand_id')
+                                            ->relationship('brand', 'name')
+                                            ->required()
+                                            ->searchable()
+                                            ->preload(),
+                                        Forms\Components\Select::make('unit_id')
+                                            ->relationship('unit', 'name')
+                                            ->required()
+                                            ->searchable()
+                                            ->preload(),
+                                    ])
+                                    ->columns(2),
+                                Forms\Components\Section::make(__('product.sections.pricing.title'))
+                                    ->schema([
+                                        Forms\Components\TextInput::make('price')
+                                            ->required()
+                                            ->numeric()
+                                            ->prefix('$'),
+                                        Forms\Components\TextInput::make('cost')
+                                            ->required()
+                                            ->numeric()
+                                            ->prefix('$'),
+
+                                    ])->columns(2),
+                                Forms\Components\Section::make(__('product.sections.inventory.title'))
+                                    ->schema([
+                                        Forms\Components\TextInput::make('quantity')
+                                            ->required()
+                                            ->numeric()
+                                            ->default(0),
+                                        Forms\Components\TextInput::make('reorder_point')
+                                            ->numeric()
+                                            ->nullable(),
+                                        Forms\Components\TextInput::make('barcode')
+                                            ->label('Barcode')
+                                            ->unique(ignoreRecord: true)
+                                            ->nullable()
+                                            ->maxLength(255),
+                                    ])->columns(2),
+                                Forms\Components\Repeater::make('serial_numbers')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('serial_number'),
+                                    ])
+                                    ->nullable()
+                                    ->columnSpanFull()
+                            ])->columnSpan(2),
+                    ])->columnSpan(2),
+
+                Forms\Components\Section::make(__('product.sections.other.title'))
+                    ->schema([
+                        SpatieMediaLibraryFileUpload::make('image')
+                            ->label(__('product.fields.image.label'))
+                            ->image()
+                            ->collection('product_images')
+                            ->imageEditor()
+                            ->columnSpanFull(),
+                        /* Forms\Components\Toggle::make('is_active')
+                            ->label('Active')
+                            ->default(true),
+                        Forms\Components\Toggle::make('is_featured')
+                            ->label('Featured')
+                            ->default(false), */
+                    ])->columnSpan(1),
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('branch.name')
-                    ->label('Branch')
+                Tables\Columns\TextColumn::make('brand.name')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')

@@ -13,11 +13,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 class WarehouseTransferResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = WarehouseTransfer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
-    protected static ?string $navigationGroup = 'Inventory Management';
 
     // registe to tenancy
     protected static bool $isScopedToTenant = false;
@@ -25,6 +26,7 @@ class WarehouseTransferResource extends Resource
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
         return $form
             ->schema([
                 Forms\Components\Select::make('from_branch_id')
@@ -34,6 +36,7 @@ class WarehouseTransferResource extends Resource
                     ->relationship('toBranch', 'name')
                     ->required()
                     ->different('from_branch_id'),
+                    
                 Forms\Components\Select::make('product_id')
                     ->relationship('product', 'name')
                     ->required()

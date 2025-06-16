@@ -28,25 +28,23 @@ use Illuminate\Support\HtmlString;
 
 class PurchaseInvoiceResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = PurchaseInvoice::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
         return $form
             ->schema([
                 Section::make('Invoice Details')
                     ->schema([
                         Grid::make(2)
                             ->schema([
-                                Forms\Components\Select::make('branch_id')
-                                    ->label('Branch')
-                                    ->options(Branch::all()->pluck('name', 'id'))
-                                    ->required()
-                                    ->hiddenOn('edit'), // Branch should not be changed after creation
+                                
                                 Forms\Components\Select::make('supplier_id')
-                                    ->label('Supplier')
                                     ->options(Supplier::all()->pluck('name', 'id'))
                                     ->nullable()
                                     ->searchable(),
@@ -70,7 +68,6 @@ class PurchaseInvoiceResource extends Resource
                             ->relationship('items') // Assuming a hasMany relationship named 'items' in PurchaseInvoice model
                             ->schema([
                                 Select::make('product_id')
-                                    ->label('Product')
                                     ->options(Product::all()->pluck('name', 'id'))
                                     ->required()
                                     ->reactive()
@@ -97,6 +94,7 @@ class PurchaseInvoiceResource extends Resource
                                     ->required()
                                     ->prefix('$')
                                     ->disabled(),
+                                    
                                 TextInput::make('subtotal')
                                     ->numeric()
                                     ->required()

@@ -10,16 +10,9 @@ class Supplier extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'phone',
-        'address',
-        'email',
-        'branch_id',
+    protected $guarded = [
+        
     ];
 
-    public function branch(): BelongsTo
-    {
-        return $this->belongsTo(Branch::class);
-    }
+   
 }

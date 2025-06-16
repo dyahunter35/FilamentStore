@@ -28,6 +28,8 @@ use Illuminate\Support\HtmlString;
 
 class SalesInvoiceResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+    
     protected static ?string $model = SalesInvoice::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';

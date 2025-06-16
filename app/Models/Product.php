@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
     use HasFactory, Notifiable;
+    use \Spatie\MediaLibrary\InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -30,6 +32,15 @@ class Product extends Model
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
+    }
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class);
+    }
+    public function unit(): BelongsTo
+    {
+        return $this->belongsTo(ProductUnit::class);
     }
 
     public function isLowStock(): bool

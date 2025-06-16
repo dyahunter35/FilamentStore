@@ -10,6 +10,7 @@ use App\Observers\PurchaseInvoiceItemObserver;
 use App\Observers\PurchaseReturnObserver;
 use App\Observers\SalesInvoiceItemObserver;
 use App\Observers\SalesReturnObserver;
+use BezhanSalleh\FilamentLanguageSwitch\Enums\Placement;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Filament\Resources\Resource;
 use Illuminate\Support\ServiceProvider;
@@ -37,11 +38,6 @@ class AppServiceProvider extends ServiceProvider
         SalesReturn::observe(SalesReturnObserver::class);
         PurchaseReturn::observe(PurchaseReturnObserver::class);
 
-        LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
-            $switch
-                ->visible(outsidePanels: true)
-
-                ->locales(['ar', 'en']); // also accepts a closure
-        });
+        
     }
 }

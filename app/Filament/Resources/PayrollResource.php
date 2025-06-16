@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PayrollResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
     protected static ?string $model = Payroll::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

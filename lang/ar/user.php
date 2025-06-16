@@ -5,7 +5,7 @@ return [
     'navigation' => [
         'group' => 'إدارة المستخدمين',
         'label' => 'مستخدم',
-        'plural_label' => 'المستخدمين',
+        'plural_label' => 'المستخدمون',
     ],
 
     // Section headers
@@ -32,10 +32,10 @@ return [
         ],
         'email' => [
             'label' => 'البريد الإلكتروني',
-            'placeholder' => 'أدخل البريد الإلكتروني',
+            'placeholder' => 'أدخل عنوان البريد الإلكتروني',
         ],
         'phone' => [
-            'label' => 'رقم الهاتف',
+            'label' => 'الهاتف',
             'placeholder' => 'أدخل رقم الهاتف',
         ],
         'password' => [
@@ -44,18 +44,18 @@ return [
         ],
         'password_confirmation' => [
             'label' => 'تأكيد كلمة المرور',
-            'placeholder' => 'تأكيد كلمة المرور',
+            'placeholder' => 'أكد كلمة المرور',
         ],
         'role' => [
             'label' => 'الدور',
-            'placeholder' => 'اختر الدور',
+            'placeholder' => 'اختر دور',
         ],
         'status' => [
             'label' => 'الحالة',
             'options' => [
                 'active' => 'نشط',
                 'inactive' => 'غير نشط',
-                'suspended' => 'موقوف',
+                'suspended' => 'معلق',
             ],
         ],
         'avatar' => [
@@ -63,7 +63,7 @@ return [
             'placeholder' => 'رفع صورة شخصية',
         ],
         'email_verified_at' => [
-            'label' => 'تاريخ تأكيد البريد',
+            'label' => 'تاريخ تأكيد البريد الإلكتروني',
             'placeholder' => ''
         ],
         'created_at' => [
@@ -83,24 +83,24 @@ return [
                 'message' => 'تفعيل المستخدم'
             ],
             'inactive' => [
-                'label' => 'تعطيل',
-                'message' => 'تعطيل المستخدم'
+                'label' => 'إلغاء التفعيل',
+                'message' => 'إلغاء تفعيل المستخدم'
             ],
             'suspended' => [
-                'label' => 'إيقاف',
-                'message' => 'إيقاف المستخدم'
+                'label' => 'تعليق',
+                'message' => 'تعليق المستخدم'
             ],
         ]
     ],
 
     'relations' => [
         'roles' => [
-            'label' => 'دور',
+            'label' => 'الدور',
             'plural_label' => 'الأدوار',
             'placeholder' => 'اختر الأدوار',
         ],
         'permissions' => [
-            'label' => 'صلاحية',
+            'label' => 'الصلاحية',
             'plural_label' => 'الصلاحيات',
             'placeholder' => 'اختر الصلاحيات',
         ],
@@ -113,8 +113,8 @@ return [
             'deleted' => 'تم حذف المستخدم بنجاح',
             'not_found' => 'المستخدم غير موجود',
             'validation_error' => 'خطأ في التحقق من البيانات',
-            'unauthorized' => 'غير مصرح لك بتنفيذ هذا الإجراء',
-            'email_already_exists' => 'البريد الإلكتروني مستخدم مسبقاً',
+            'unauthorized' => 'غير مخول لتنفيذ هذا الإجراء',
+            'email_already_exists' => 'عنوان البريد الإلكتروني موجود بالفعل',
             'password_updated' => 'تم تحديث كلمة المرور بنجاح',
             'profile_updated' => 'تم تحديث الملف الشخصي بنجاح',
         ],

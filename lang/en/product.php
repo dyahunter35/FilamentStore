@@ -4,8 +4,13 @@ return [
     // Navigation Labels
     'navigation' => [
         'group' => 'Product Management',
-        'label' => 'Product',
+        'label' => 'Products',
         'plural_label' => 'Products',
+        'model_label' => 'Product',
+    ],
+    'bradcrumbs' => [
+        'index' => 'Products',
+        'list_project' => 'Product List',
     ],
 
     // Section headers
@@ -14,13 +19,10 @@ return [
             'title' => 'Base Information',
         ],
         'pricing' => [
-            'title' => 'Pricing Information'
+            'title' => 'Pricing'
         ],
         'inventory' => [
-            'title' => 'Inventory Management'
-        ],
-        'media' => [
-            'title' => 'Media',
+            'title' => 'Inventory',
         ],
         'other' => [
             'title' => 'Other',
@@ -30,76 +32,68 @@ return [
     // Form Field Labels
     'fields' => [
         'name' => [
-            'label' => 'Product Name',
-            'placeholder' => 'Enter the product name',
-        ],
-        'slug' => [
-            'label' => 'Slug',
-            'placeholder' => 'Enter the product slug',
+            'label' => 'Name',
+            'placeholder' => 'Enter product name',
         ],
         'description' => [
             'label' => 'Description',
-            'placeholder' => 'Enter the product description',
-        ],
-        'short_description' => [
-            'label' => 'Short Description',
-            'placeholder' => 'Enter a brief description',
-        ],
-        'category_id' => [
-            'label' => 'Category',
-            'placeholder' => 'Select a category',
-        ],
-        'brand_id' => [
-            'label' => 'Brand',
-            'placeholder' => 'Select a brand',
+            'placeholder' => 'Enter product description',
         ],
         'sku' => [
             'label' => 'SKU',
-            'placeholder' => 'Enter product SKU',
+            'placeholder' => 'Enter SKU',
+        ],
+        'barcode' => [
+            'label' => 'Barcode',
+            'placeholder' => 'Enter barcode',
+        ],
+        'category_id' => [
+            'label' => 'Category',
+            'placeholder' => 'Select category',
+        ],
+        'brand_id' => [
+            'label' => 'Brand',
+            'placeholder' => 'Enter brand',
+        ],
+        'unit_id' => [
+            'label' => 'Unit',
+            'placeholder' => 'Enter unit (e.g., pcs, kg)',
+        ],
+        'cost' => [
+            'label' => 'Cost Price',
+            'placeholder' => 'Enter cost price',
         ],
         'price' => [
-            'label' => 'Price',
-            'placeholder' => 'Enter the price',
+            'label' => 'Selling Price',
+            'placeholder' => 'Enter selling price',
         ],
-        'sale_price' => [
-            'label' => 'Sale Price',
-            'placeholder' => 'Enter the sale price',
-        ],
-        'cost_price' => [
-            'label' => 'Cost Price',
-            'placeholder' => 'Enter the cost price',
-        ],
-        'stock_quantity' => [
-            'label' => 'Stock Quantity',
-            'placeholder' => 'Enter stock quantity',
-        ],
-        'min_stock' => [
+        'minimum_stock' => [
             'label' => 'Minimum Stock',
             'placeholder' => 'Enter minimum stock level',
         ],
+        'current_stock' => [
+            'label' => 'Current Stock',
+            'placeholder' => 'Current stock quantity',
+        ],
         'weight' => [
             'label' => 'Weight',
-            'placeholder' => 'Enter product weight',
+            'placeholder' => 'Enter weight',
         ],
         'dimensions' => [
             'label' => 'Dimensions',
-            'placeholder' => 'Enter product dimensions',
+            'placeholder' => 'Enter dimensions',
+        ],
+        'image' => [
+            'label' => 'Image',
+            'placeholder' => 'Upload product image',
         ],
         'status' => [
             'label' => 'Status',
             'options' => [
                 'active' => 'Active',
                 'inactive' => 'Inactive',
-                'draft' => 'Draft',
-                'out_of_stock' => 'Out of Stock',
+                'discontinued' => 'Discontinued',
             ],
-        ],
-        'featured' => [
-            'label' => 'Featured',
-        ],
-        'images' => [
-            'label' => 'Product Images',
-            'placeholder' => 'Upload product images',
         ],
         'created_at' => [
             'label' => 'Created At',
@@ -121,44 +115,28 @@ return [
                 'label' => 'Deactivate',
                 'message' => 'Deactivate Product'
             ],
-            'draft' => [
-                'label' => 'Set as Draft',
-                'message' => 'Set Product as Draft'
-            ],
-            'featured' => [
-                'label' => 'Feature',
-                'message' => 'Feature Product'
+            'discontinue' => [
+                'label' => 'Discontinue',
+                'message' => 'Discontinue Product'
             ],
         ]
     ],
 
     'relations' => [
-        'variants' => [
-            'label' => 'Variant',
-            'plural_label' => 'Variants',
-            'placeholder' => 'Select variants',
+        'category' => [
+            'label' => 'Category',
+            'plural_label' => 'Categories',
+            'placeholder' => 'Select category',
         ],
-        'reviews' => [
-            'label' => 'Review',
-            'plural_label' => 'Reviews',
-            'fields' => [
-                'rating' => [
-                    'label' => 'Rating',
-                    'placeholder' => 'Enter rating',
-                ],
-                'comment' => [
-                    'label' => 'Comment',
-                    'placeholder' => 'Enter review comment',
-                ],
-                'user_id' => [
-                    'label' => 'User',
-                    'placeholder' => 'Select user',
-                ],
-            ],
+        'purchase_items' => [
+            'label' => 'Purchase Item',
+            'plural_label' => 'Purchase Items',
+            'placeholder' => 'Select purchase items',
         ],
-        'orders' => [
-            'label' => 'Order',
-            'plural_label' => 'Orders',
+        'sales_items' => [
+            'label' => 'Sales Item',
+            'plural_label' => 'Sales Items',
+            'placeholder' => 'Select sales items',
         ],
     ],
 
@@ -170,9 +148,8 @@ return [
             'not_found' => 'Product not found',
             'validation_error' => 'Data validation error',
             'unauthorized' => 'You are not authorized to perform this action',
-            'out_of_stock' => 'Product is out of stock',
-            'stock_updated' => 'Stock quantity updated successfully',
-            'featured_updated' => 'Featured status updated successfully',
+            'sku_already_exists' => 'SKU already exists',
+            'stock_updated' => 'Stock updated successfully',
         ],
     ],
 ];
