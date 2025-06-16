@@ -13,6 +13,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('app:check-low-stock')->hourly();
+        $schedule->command('notifications:send')->daily();
+
+        // Check for notifications daily at 8 AM
+        $schedule->command('app:send-system-notifications')->dailyAt('08:00');
     }
 
     /**
@@ -21,6 +25,6 @@ class Kernel extends ConsoleKernel
     protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
-        require base_path('routes/console.php');
+        require_once base_path('routes/console.php');
     }
 }

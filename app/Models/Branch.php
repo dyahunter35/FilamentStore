@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Models\Tenant;
 use Filament\Models\Concerns\BelongsToTenant;
@@ -117,4 +118,25 @@ class Branch extends Model
     {
         return $this->hasMany(CurrencyTransfer::class);
     }
+
+    /** @return HasMany<\App\Models\ExchangeClientTransaction, self> */
+    public function exchangeClientTransactions(): HasMany
+    {
+        return $this->hasMany(\App\Models\ExchangeClientTransaction::class);
+    }
+
+
+    /** @return HasMany<\App\Models\OtherRevenue, self> */
+    public function otherRevenues(): HasMany
+    {
+        return $this->hasMany(\App\Models\OtherRevenue::class);
+    }
+
+
+    /** @return HasMany<\App\Models\SalesReturn, self> */
+    public function salesReturns(): HasMany
+    {
+        return $this->hasMany(\App\Models\SalesReturn::class);
+    }
+
 }

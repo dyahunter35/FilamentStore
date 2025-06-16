@@ -3,22 +3,22 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\SalesInvoice;
+use App\Models\PurchaseInvoice;
 use App\Models\Branch;
 use App\Models\Product;
-use App\Models\Customer;
+use App\Models\Supplier;
 
-class SalesReportViewer extends Component
+class PurchaseReportViewer extends Component
 {
     public $startDate;
     public $endDate;
     public $branchId = null;
     public $productId = null;
-    public $customerId = null;
-    public $salesInvoices = [];
+    public $supplierId = null;
+    public $purchaseInvoices = [];
     public $branches = [];
     public $products = [];
-    public $customers = [];
+    public $suppliers = [];
 
     public function mount()
     {
@@ -26,12 +26,12 @@ class SalesReportViewer extends Component
         $this->endDate = now()->endOfMonth()->toDateString();
         $this->branches = Branch::all();
         $this->products = Product::all();
-        $this->customers = Customer::all();
+        $this->suppliers = Supplier::all();
     }
 
     public function generateReport()
     {
-        $query = SalesInvoice::query();
+        $query = PurchaseInvoice::query();
 
         if ($this->startDate && $this->endDate) {
             $query->whereBetween('date', [$this->startDate, $this->endDate]);
@@ -42,21 +42,21 @@ class SalesReportViewer extends Component
         }
 
         if ($this->productId) {
-            // This requires joining with sales_invoice_items table
+            // This requires joining with purchase_invoice_items table
             $query->whereHas('items', function ($query) {
                 $query->where('product_id', $this->productId);
             });
         }
 
-        if ($this->customerId) {
-            $query->where('customer_id', $this->customerId);
+        if ($this->supplierId) {
+            $query->where('supplier_id', $this->supplierId);
         }
 
-        $this->salesInvoices = $query->with(['customer', 'branch', 'items.product'])->get();
+        $this->purchaseInvoices = $query->with(['supplier', 'branch', 'items.product'])->get();
     }
 
     public function render()
     {
-        return view('livewire.sales-report-viewer');
+        return view('livewire.purchase-report-viewer');
     }
 }

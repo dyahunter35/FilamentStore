@@ -28,11 +28,11 @@
                 </select>
             </div>
             <div>
-                <label for="customerId">Select Customer</label>
-                <select wire:model="customerId" id="customerId" class="filament-forms-input">
-                    <option value="">-- All Customers --</option>
-                    @foreach($customers as $customer)
-                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                <label for="supplierId">Select Supplier</label>
+                <select wire:model="supplierId" id="supplierId" class="filament-forms-input">
+                    <option value="">-- All Suppliers --</option>
+                    @foreach($suppliers as $supplier)
+                        <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -42,15 +42,15 @@
         </div>
     </form>
 
-    @if(!empty($salesInvoices))
+    @if(!empty($purchaseInvoices))
         <div class="overflow-x-auto bg-white rounded shadow p-4">
-            <h2 class="text-lg font-bold mb-4">Sales Report</h2>
+            <h2 class="text-lg font-bold mb-4">Purchase Report</h2>
             <table class="min-w-full border">
                 <thead>
                     <tr>
                         <th class="border px-2 py-1">Invoice #</th>
                         <th class="border px-2 py-1">Date</th>
-                        <th class="border px-2 py-1">Customer</th>
+                        <th class="border px-2 py-1">Supplier</th>
                         <th class="border px-2 py-1">Branch</th>
                         <th class="border px-2 py-1">Total Amount</th>
                         <th class="border px-2 py-1">Discount</th>
@@ -60,11 +60,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($salesInvoices as $invoice)
+                    @foreach($purchaseInvoices as $invoice)
                         <tr>
                             <td class="border px-2 py-1">{{ $invoice->id }}</td>
                             <td class="border px-2 py-1">{{ \Carbon\Carbon::parse($invoice->date)->format('Y-m-d') }}</td>
-                            <td class="border px-2 py-1">{{ $invoice->customer->name ?? 'N/A' }}</td>
+                            <td class="border px-2 py-1">{{ $invoice->supplier->name ?? 'N/A' }}</td>
                             <td class="border px-2 py-1">{{ $invoice->branch->name ?? 'N/A' }}</td>
                             <td class="border px-2 py-1">{{ number_format($invoice->total_amount, 2) }}</td>
                             <td class="border px-2 py-1">{{ number_format($invoice->discount, 2) }}</td>
@@ -82,9 +82,9 @@
                 </tbody>
             </table>
         </div>
-    @elseif($startDate || $endDate || $branchId || $productId || $customerId)
+    @elseif($startDate || $endDate || $branchId || $productId || $supplierId)
         <div class="mt-4 p-2 bg-yellow-100 text-yellow-800 rounded">
-            No sales data found for the selected criteria.
+            No purchase data found for the selected criteria.
         </div>
     @endif
 </div>

@@ -2,12 +2,10 @@
 
 namespace App\Notifications;
 
-use App\Filament\Resources\ProductResource;
-use App\Models\Product;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
-use Filament\Notifications\Notification as NotificationsNotification;
+use App\Models\Product;
 
 class LowStockNotification extends Notification
 {
@@ -22,36 +20,27 @@ class LowStockNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['database', 'mail', 'filament'];
+        return ['mail', 'database'];
     }
 
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject('Low Stock Alert')
-            ->line("Product {$this->product->name} is running low on stock.")
+            ->line("The product {$this->product->name} is running low on stock.")
             ->line("Current quantity: {$this->product->quantity}")
-            ->line("Reorder point: {$this->product->reorder_point}")
-            ->action('View Product', url('/admin/products/' . $this->product->id));
+            ->line("Minimum quantity: {$this->product->min_quantity}")
+            ->action('View Product', url("/admin/products/{$this->product->id}"))
+            ->line('Please reorder soon to maintain adequate inventory levels.');
     }
 
-    /* public function toArray($notifiable): array
+    public function toArray($notifiable): array
     {
         return [
             'product_id' => $this->product->id,
             'product_name' => $this->product->name,
-            'quantity' => $this->product->quantity,
-            'reorder_point' => $this->product->reorder_point,
+            'current_quantity' => $this->product->quantity,
+            'min_quantity' => $this->product->min_quantity,
         ];
-    } */
-
-    public function toDatabase($notifiable): array
-    {
-        return NotificationsNotification::make()
-            ->title('Low Stock Alert')
-            ->body("Product {$this->product->name} is running low on stock. Current quantity: {$this->product->quantity}, Reorder point: {$this->product->reorder_point}")
-            ->url(ProductResource::getUrl('edit',['record' => $this->product->id]))
-            ->toArray();
-
     }
 }

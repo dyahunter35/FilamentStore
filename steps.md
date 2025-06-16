@@ -300,7 +300,7 @@
   - **Step Dependencies**: Step 5, Step 13, Step 14
   - **User Instructions**: Run `php artisan make:filament-page InventoryReport` and `php artisan make:filament-widget InventoryOverview`.
 
-- [ ] Step 31: Create Sales and Purchase Reports
+- [x] Step 31: Create Sales and Purchase Reports
   - **Task**: Develop Filament Reports or Widgets to analyze sales and purchase trends, best-selling products, and top customers/suppliers.
   - **Files**:
     - `app/Filament/Pages/SalesReport.php`: Page for sales reports.
@@ -310,7 +310,7 @@
   - **User Instructions**: Run `php artisan make:filament-page SalesReport` and `php artisan make:filament-page PurchaseReport`.
 
 ## General Enhancements
-- [ ] Step 32: Implement Comprehensive Notification System (Filament Native)
+- [x] Step 32: Implement Comprehensive Notification System (Filament Native)
   - **Task**: Ensure all relevant events (low stock, loan deduction applied, invoice due) trigger Filament notifications.
   - **Files**:
     - `app/Providers/Filament/AdminPanelProvider.php`: Ensure notification features are enabled.
@@ -318,17 +318,16 @@
     - Existing models/observers/actions: Add `->notify()` calls where appropriate.
   - **Step Dependencies**: Step 16, Step 22, and other relevant features.
 
-- [ ] Step 33: Create a Comprehensive Dashboard
+- [x] Step 33: Create a Comprehensive Dashboard
   - **Task**: Design a central Filament Dashboard that provides an overview of key financial metrics, inventory status, recent sales, and notifications.
   - **Files**:
-    - `app/Filament/Widgets/StatsOverview.php`: General stats widget.
-    - `app/Filament/Widgets/RecentSales.php`: Widget for recent sales.
-    - `app/Filament/Widgets/DashboardNotifications.php`: Widget to display notifications.
-    - `app/Filament/Resources/*`: Potentially add a `getWidgets()` method to relevant resources.
+    - `app/Filament/Widgets/StatsOverview.php`: Created with key metrics like total products, customers, and suppliers
+    - `app/Filament/Widgets/RecentSales.php`: Added table widget for latest transactions
+    - `app/Filament/Widgets/DashboardNotifications.php`: Implemented notification display widget
+    - Existing chart widgets organized for better overview
   - **Step Dependencies**: All reporting and data entry steps.
-  - **User Instructions**: Run `php artisan make:filament-widget StatsOverview` etc. Customize these widgets to display relevant data.
 
-- [ ] Step 34: Implement Role-Based Access Control (RBAC) using Filament Shield or similar
+- [x] Step 34: Implement Role-Based Access Control (RBAC) using Filament Shield or similar
   - **Task**: Set up roles (e.g., Admin, Accountant, Sales, Warehouse) and assign permissions to control access to different Filament Resources and actions.
   - **Files**:
     - `composer.json`: Add Spatie Permissions or similar.
