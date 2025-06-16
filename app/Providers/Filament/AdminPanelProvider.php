@@ -25,6 +25,7 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Filament\SpatieLaravelTenancyPlugin;
+use Filament\SpatieLaravelTranslatablePlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -102,6 +103,10 @@ class AdminPanelProvider extends PanelProvider
                         'default' => 1,
                         'sm' => 2,
                     ]),
+
+                SpatieLaravelTranslatablePlugin::make()
+                    ->defaultLocales(['ar', 'en']),
+
             ])
             ->authMiddleware([
                 Authenticate::class,

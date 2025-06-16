@@ -23,20 +23,18 @@ class AttendanceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('branch_id')
-                    ->label('Branch')
-                    ->options(\App\Models\Branch::all()->pluck('name', 'id'))
-                    ->required()
-                    ->hiddenOn('edit'),
                 Forms\Components\Select::make('employee_id')
                     ->label('Employee')
                     ->options(\App\Models\Employee::all()->pluck('name', 'id'))
                     ->required(),
                 Forms\Components\DatePicker::make('date')
+                    ->default(now())
                     ->required(),
                 Forms\Components\TimePicker::make('clock_in_time')
+                    ->default(now())
                     ->nullable(),
                 Forms\Components\TimePicker::make('clock_out_time')
+                    ->default(now())
                     ->nullable(),
             ]);
     }
@@ -79,7 +77,7 @@ class AttendanceResource extends Resource
                             return;
                         }
                         $query->whereMonth('date', '=', date('m', strtotime($data['month'])))
-                              ->whereYear('date', '=', date('Y', strtotime($data['month'])));
+                            ->whereYear('date', '=', date('Y', strtotime($data['month'])));
                     }),
                 Tables\Filters\Filter::make('week')
                     ->form([

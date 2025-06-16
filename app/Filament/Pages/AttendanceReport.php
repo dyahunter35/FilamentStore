@@ -19,6 +19,15 @@ class AttendanceReport extends Page
     public $selectedWeek;
     public $attendances = [];
 
+    public static function getNavigationLabel(): string
+    {
+        return __('reports.navigations.attendence.label');
+    }
+    public static function getNavigationGroup(): ?string
+    {
+        return __('reports.navigation.group');
+    }
+
     public function mount()
     {
         $this->selectedMonth = now()->format('Y-m');
