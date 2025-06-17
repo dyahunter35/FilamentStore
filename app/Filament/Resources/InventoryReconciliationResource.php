@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InventoryReconciliationResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = InventoryReconciliation::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

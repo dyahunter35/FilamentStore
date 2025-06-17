@@ -14,11 +14,11 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductUnitResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = ProductUnit::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-scale';
-
-    protected static ?string $navigationGroup = 'Product Management';
 
     protected static ?int $navigationSort = 2;
 
@@ -26,25 +26,21 @@ class ProductUnitResource extends Resource
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
+
         return $form
             ->schema([
                 Forms\Components\Section::make(__('product_unit.sections.base_information.title'))
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label(__('product_unit.fields.name.label'))
-                            ->placeholder(__('product_unit.fields.name.placeholder'))
                             ->required()
                             ->maxLength(100),
 
                         Forms\Components\TextInput::make('symbol')
-                            ->label(__('product_unit.fields.symbol.label'))
-                            ->placeholder(__('product_unit.fields.symbol.placeholder'))
                             ->required()
                             ->maxLength(10),
 
                         Forms\Components\TextInput::make('abbreviation')
-                            ->label(__('product_unit.fields.abbreviation.label'))
-                            ->placeholder(__('product_unit.fields.abbreviation.placeholder'))
                             ->maxLength(20),
 
                         Forms\Components\Select::make('type')
@@ -71,8 +67,6 @@ class ProductUnitResource extends Resource
                 Forms\Components\Section::make(__('product_unit.sections.conversion_settings.title'))
                     ->schema([
                         Forms\Components\Toggle::make('base_unit')
-                            ->label(__('product_unit.fields.base_unit.label'))
-                            ->helperText(__('product_unit.fields.base_unit.helper'))
                             ->default(false)
                             ->reactive()
                             ->afterStateUpdated(function ($state, callable $set) {
@@ -82,9 +76,6 @@ class ProductUnitResource extends Resource
                             }),
 
                         Forms\Components\TextInput::make('conversion_factor')
-                            ->label(__('product_unit.fields.conversion_factor.label'))
-                            ->placeholder(__('product_unit.fields.conversion_factor.placeholder'))
-                            ->helperText(__('product_unit.fields.conversion_factor.helper'))
                             ->numeric()
                             ->step(0.000001)
                             ->minValue(0.000001)
@@ -107,25 +98,23 @@ class ProductUnitResource extends Resource
 
     public static function table(Table $table): Table
     {
+        static::translateConfigureTable();
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('product_unit.fields.name.label'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('symbol')
-                    ->label(__('product_unit.fields.symbol.label'))
                     ->searchable()
                     ->badge()
                     ->color('primary'),
 
                 Tables\Columns\TextColumn::make('abbreviation')
-                    ->label(__('product_unit.fields.abbreviation.label'))
                     ->searchable(),
 
-                Tables\Columns\BadgeColumn::make('type')
-                    ->label(__('product_unit.fields.type.label'))
+                Tables\Columns\TextColumn::make('type')
+                    ->badge()
                     ->colors([
                         'primary' => 'quantity',
                         'success' => 'weight',

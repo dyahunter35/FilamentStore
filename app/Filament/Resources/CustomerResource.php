@@ -16,12 +16,15 @@ use App\Models\Branch;
 
 class CustomerResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = Customer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
         return $form
             ->schema([
                 Forms\Components\Select::make('branch_id')

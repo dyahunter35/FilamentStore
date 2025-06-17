@@ -15,6 +15,8 @@ use Illuminate\Support\Str;
 
 class ProductCategoryResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = ProductCategory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-folder-open';

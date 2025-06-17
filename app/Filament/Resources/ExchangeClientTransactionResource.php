@@ -15,12 +15,15 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ExchangeClientTransactionResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = ExchangeClientTransaction::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
         return $form
             ->schema([
                 Forms\Components\Select::make('exchange_client_id')

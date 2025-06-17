@@ -46,9 +46,13 @@ return [
             'label' => 'Confirm Password',
             'placeholder' => 'Confirm the password',
         ],
-        'role' => [
+        'roles' => [
             'label' => 'Role',
             'placeholder' => 'Select a role',
+        ],
+        'branches' => [
+            'label' => 'Branch',
+            'placeholder' => 'Select a Branch',
         ],
         'status' => [
             'label' => 'Status',

@@ -64,6 +64,8 @@ class WarehouseTransferResource extends Resource
 
     public static function table(Table $table): Table
     {
+        static::translateConfigureTable();
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('fromBranch.name')

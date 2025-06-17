@@ -16,12 +16,15 @@ use App\Models\Branch;
 
 class ExchangeClientResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = ExchangeClient::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
         return $form
             ->schema([
 

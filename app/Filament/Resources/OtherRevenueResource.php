@@ -15,28 +15,24 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OtherRevenueResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = OtherRevenue::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
         return $form
             ->schema([
-                Forms\Components\Select::make('branch_id')
-                    ->label('Branch')
-                    ->relationship('branch', 'name')
-                    ->required()
-                    ->hiddenOn('edit'),
+
                 Forms\Components\TextInput::make('amount')
-                    ->label('Amount')
                     ->numeric()
                     ->required(),
                 Forms\Components\DatePicker::make('date')
-                    ->label('Date')
                     ->required(),
                 Forms\Components\Textarea::make('description')
-                    ->label('Description')
                     ->maxLength(65535)
                     ->nullable(),
             ]);
@@ -44,13 +40,13 @@ class OtherRevenueResource extends Resource
 
     public static function table(Table $table): Table
     {
+        static::translateConfigureTable();
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('branch.name')->label('Branch'),
-                Tables\Columns\TextColumn::make('amount')->label('Amount')->money('USD', true),
-                Tables\Columns\TextColumn::make('date')->label('Date')->date(),
-                Tables\Columns\TextColumn::make('description')->label('Description')->limit(30),
-                Tables\Columns\TextColumn::make('created_at')->label('Created')->dateTime(),
+                Tables\Columns\TextColumn::make('amount')->money('USD', true),
+                Tables\Columns\TextColumn::make('date')->date(),
+                Tables\Columns\TextColumn::make('description')->limit(30),
+                Tables\Columns\TextColumn::make('created_at')->dateTime(),
             ])
             ->filters([
                 //

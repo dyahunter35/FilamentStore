@@ -15,12 +15,16 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EmployeeLoanResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = EmployeeLoan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
+        
         return $form
             ->schema([
                 Forms\Components\Select::make('employee_id')

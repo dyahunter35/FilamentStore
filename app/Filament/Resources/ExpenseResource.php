@@ -26,7 +26,6 @@ class ExpenseResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('category_id')
-                    ->label('Category')
                     ->relationship('category', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('amount')
@@ -37,10 +36,7 @@ class ExpenseResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\Select::make('branch_id')
-                    ->label('Branch')
-                    ->relationship('branch', 'name')
-                    ->required(),
+                
             ]);
     }
 

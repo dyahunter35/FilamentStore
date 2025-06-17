@@ -21,6 +21,8 @@ class ExpenseCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static bool $isScopedToTenant = false;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -28,10 +30,7 @@ class ExpenseCategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('branch_id')
-                    ->label('Branch')
-                    ->relationship('branch', 'name')
-                    ->required(),
+                
             ]);
     }
 

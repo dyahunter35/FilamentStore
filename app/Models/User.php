@@ -12,13 +12,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Collection;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements HasTenants
+class User extends Authenticatable implements HasTenants , HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
     use \TomatoPHP\FilamentLanguageSwitcher\Traits\InteractsWithLanguages;
-
+    use InteractsWithMedia;
     /**
      * The attributes that are mass assignable.
      *

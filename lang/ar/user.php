@@ -46,9 +46,13 @@ return [
             'label' => 'تأكيد كلمة المرور',
             'placeholder' => 'أكد كلمة المرور',
         ],
-        'role' => [
+        'roles' => [
             'label' => 'الدور',
             'placeholder' => 'اختر دور',
+        ],
+        'branches' => [
+            'label' => 'الفرع',
+            'placeholder' => 'اختر الفرع',
         ],
         'status' => [
             'label' => 'الحالة',

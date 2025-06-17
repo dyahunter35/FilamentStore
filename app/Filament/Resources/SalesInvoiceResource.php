@@ -36,6 +36,8 @@ class SalesInvoiceResource extends Resource
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
+
         return $form
             ->schema([
                 Section::make('Invoice Details')

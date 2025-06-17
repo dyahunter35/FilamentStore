@@ -27,6 +27,8 @@ class PurchaseReturnResource extends Resource
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
+
         return $form
             ->schema([
                 Forms\Components\Select::make('branch_id')

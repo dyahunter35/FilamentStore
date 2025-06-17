@@ -15,12 +15,16 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CurrencyTransferResource extends Resource
 {
+    use \App\Filament\Pages\Concerns\HasResource;
+
     protected static ?string $model = CurrencyTransfer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static bool $isScopedToTenant = false;
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
         return $form
             ->schema([
                 Forms\Components\Select::make('from_currency_id')

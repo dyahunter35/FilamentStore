@@ -7,6 +7,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -21,6 +22,8 @@ class UserResource extends Resource
 
     protected static ?string $model = User::class;
 
+    protected static bool $isScopedToTenant = false;
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -29,41 +32,76 @@ class UserResource extends Resource
 
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Grid::make()
+                    ->schema([
+                        Forms\Components\Group::make()
+                            ->schema([
+                                Forms\Components\Section::make()
+                                    ->schema([
 
-                Forms\Components\Select::make('roles')
-                    ->relationship('roles', 'name')
-                    ->saveRelationshipsUsing(function (Model $record, $state) {
-                        $record->roles()->syncWithPivotValues($state, [config('permission.column_names.team_foreign_key') => getPermissionsTeamId()]);
-                    })
-                    ->multiple()
-                    ->preload()
-                    ->searchable(),
-            ]);
+                                        Forms\Components\TextInput::make('name')
+                                            ->required()
+                                            ->maxLength(255),
+                                        Forms\Components\TextInput::make('email')
+                                            ->email()
+                                            ->required()
+                                            ->maxLength(255),
+                                        Forms\Components\DateTimePicker::make('email_verified_at'),
+                                        Forms\Components\TextInput::make('password')
+                                            ->password()
+                                            ->required()
+                                            ->maxLength(255)
+                                            ->hiddenOn('edit'),
+
+                                        Forms\Components\Select::make('roles')
+                                            ->relationship('roles', 'name')
+                                            ->multiple()
+                                            ->preload()
+                                            ->searchable(),
+
+                                        Forms\Components\Select::make('branches')
+                                            ->relationship('branches', 'name')
+                                            ->multiple()
+                                            ->preload()
+                                            ->searchable(),
+
+                                    ])->columns(2),
+                            ])->columnSpan(2),
+                    ])->columnSpan(2),
+                Forms\Components\Section::make(__('user.sections.other.title'))
+                    ->schema([
+                        SpatieMediaLibraryFileUpload::make('image')
+                            ->label(__('product.fields.image.label'))
+                            ->image()
+                            ->collection('user_logo')
+                            ->imageEditor()
+                            ->columnSpanFull(),
+                        /* Forms\Components\Toggle::make('is_active')
+                            ->label('Active')
+                            ->default(true),
+                        Forms\Components\Toggle::make('is_featured')
+                            ->label('Featured')
+                            ->default(false), */
+                    ])->columnSpan(1),
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
+        static::translateConfigureTable();
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->badge(),
+                    Tables\Columns\TextColumn::make('branches.name')
+                    ->badge(),
+                
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
