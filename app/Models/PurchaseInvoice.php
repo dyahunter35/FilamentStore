@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Purchaseburcher extends Model
+class PurchaseInvoice extends Model
 {
     use HasFactory;
 

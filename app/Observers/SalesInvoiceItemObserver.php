@@ -4,10 +4,25 @@ namespace App\Observers;
 
 use App\Models\SalesInvoiceItem;
 use App\Models\User;
+use App\Models\Product;
 use App\Notifications\LowStockNotification;
 
 class SalesInvoiceItemObserver
 {
+    /**
+     * Handle the SalesInvoiceItem "creating" event.
+     */
+    public function creating(SalesInvoiceItem $salesInvoiceItem): void
+    {
+        if (!$salesInvoiceItem->unit_price) {
+            $product = Product::find($salesInvoiceItem->product_id);
+            if ($product) {
+                $salesInvoiceItem->unit_price = $product->price;
+                $salesInvoiceItem->subtotal = $salesInvoiceItem->quantity * $product->price;
+            }
+        }
+    }
+
     /**
      * Handle the SalesInvoiceItem "created" event.
      */
@@ -25,6 +40,20 @@ class SalesInvoiceItemObserver
                 ->each(fn (User $user) => 
                     $user->notify(new LowStockNotification($product))
                 );
+        }
+
+        // Update invoice totals
+        $this->updateInvoiceTotals($salesInvoiceItem);
+    }
+
+    /**
+     * Handle the SalesInvoiceItem "updating" event.
+     */
+    public function updating(SalesInvoiceItem $salesInvoiceItem): void
+    {
+        // Recalculate subtotal if quantity or unit_price changes
+        if ($salesInvoiceItem->isDirty(['quantity', 'unit_price'])) {
+            $salesInvoiceItem->subtotal = $salesInvoiceItem->quantity * $salesInvoiceItem->unit_price;
         }
     }
 
@@ -53,6 +82,9 @@ class SalesInvoiceItemObserver
                     );
             }
         }
+
+        // Update invoice totals
+        $this->updateInvoiceTotals($salesInvoiceItem);
     }
 
     /**
@@ -64,6 +96,26 @@ class SalesInvoiceItemObserver
         $product = $salesInvoiceItem->product;
         $product->quantity += $salesInvoiceItem->quantity;
         $product->save();
+
+        // Update invoice totals
+        $this->updateInvoiceTotals($salesInvoiceItem);
+    }
+
+    /**
+     * Update the totals of the associated invoice.
+     */
+    protected function updateInvoiceTotals(SalesInvoiceItem $salesInvoiceItem): void
+    {
+        if ($salesInvoiceItem->salesInvoice) {
+            $totalAmount = $salesInvoiceItem->salesInvoice->items()->sum('subtotal');
+            $discount = $salesInvoiceItem->salesInvoice->discount ?? 0;
+            $finalAmount = $totalAmount - $discount;
+            
+            $salesInvoiceItem->salesInvoice->update([
+                'total_amount' => $totalAmount,
+                'final_amount' => $finalAmount
+            ]);
+        }
     }
 
     /**

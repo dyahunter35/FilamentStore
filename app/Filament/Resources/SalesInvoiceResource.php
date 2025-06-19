@@ -36,7 +36,6 @@ class SalesInvoiceResource extends Resource
 
     public static function form(Form $form): Form
     {
-        //dd(static::getLocalePath());
         static::translateConfigureForm();
 
         return $form
@@ -93,9 +92,14 @@ class SalesInvoiceResource extends Resource
                                     }),
                                 TextInput::make('unit_price')
                                     ->numeric()
+                                    ->dehydrated(true)
                                     ->required()
                                     ->prefix('$')
-                                    ->disabled(),
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                                        $quantity = $get('quantity');
+                                        $set('subtotal', $state * $quantity);
+                                    }),
                                 TextInput::make('subtotal')
                                     ->numeric()
                                     ->required()
@@ -109,6 +113,7 @@ class SalesInvoiceResource extends Resource
                             ->afterStateUpdated(function (Get $get, Set $set) {
                                 self::updateTotals($get, $set);
                             })
+
                             ->deleteAction(function (Forms\Components\Actions\Action $action, Get $get, Set $set) {
                                 $action->before(function () use ($get, $set) {
                                     self::updateTotals($get, $set);
@@ -228,15 +233,18 @@ class SalesInvoiceResource extends Resource
         return $query->where('branch_id', filament()->getTenant()->id);
     }
 
-    // Helper function to update totals
-    public static function updateTotals(Get $get, Set $set): void
-    {
-        $items = $get('items');
-        $totalAmount = collect($items)->sum('subtotal');
-        $discount = $get('discount') ?? 0;
-        $finalAmount = $totalAmount - $discount;
+     // Helper function to update totals
+     public static function updateTotals(Get $get, Set $set): void
+     {
+         $items = $get('items');
+         $totalAmount = collect($items)->sum('subtotal') ?? 0;
+         $discount = $get('discount') ?? 0;
+         // Ensure discount is not greater than total amount
+         $discount = is_numeric($discount) ? $discount : 0; // Ensure discount is numeric
 
-        $set('total_amount', number_format($totalAmount, 2, '.', ''));
-        $set('final_amount', number_format($finalAmount, 2, '.', ''));
-    }
+         $finalAmount = $totalAmount - $discount ?? 0;
+
+         $set('total_amount', number_format($totalAmount, 2, '.', ''));
+         $set('final_amount', number_format($finalAmount, 2, '.', ''));
+     }
 }

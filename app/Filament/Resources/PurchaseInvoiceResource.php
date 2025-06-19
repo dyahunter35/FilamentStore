@@ -43,7 +43,7 @@ class PurchaseInvoiceResource extends Resource
                     ->schema([
                         Grid::make(2)
                             ->schema([
-                                
+
                                 Forms\Components\Select::make('supplier_id')
                                     ->options(Supplier::all()->pluck('name', 'id'))
                                     ->nullable()
@@ -91,10 +91,14 @@ class PurchaseInvoiceResource extends Resource
                                     }),
                                 TextInput::make('unit_price')
                                     ->numeric()
+                                    ->dehydrated(true)
                                     ->required()
                                     ->prefix('$')
-                                    ->disabled(),
-                                    
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                                        $quantity = $get('quantity');
+                                        $set('subtotal', $state * $quantity);
+                                    }),
                                 TextInput::make('subtotal')
                                     ->numeric()
                                     ->required()
@@ -126,8 +130,12 @@ class PurchaseInvoiceResource extends Resource
                             ->required()
                             ->numeric()
                             ->default(0)
+                            ->minValue(0)
                             ->prefix('$')
                             ->live()
+                            ->beforeStateDehydrated(function (Get $get, Set $set) {
+                                $this->updateTotals($get, $set);
+                            })
                             ->afterStateUpdated(function (Get $get, Set $set) {
                                 $this->updateTotals($get, $set);
                             }),
@@ -230,9 +238,15 @@ class PurchaseInvoiceResource extends Resource
     public static function updateTotals(Get $get, Set $set): void
     {
         $items = $get('items');
-        $totalAmount = collect($items)->sum('subtotal');
+        $totalAmount = collect($items)->sum('subtotal') ?? 0;
         $discount = $get('discount') ?? 0;
-        $finalAmount = $totalAmount - $discount;
+        // Ensure discount is not greater than total amount
+        $discount = is_numeric($discount) ? $discount : 0; // Ensure discount is numeric
+        
+        if ($discount > $totalAmount) {
+            $discount = $totalAmount;
+        }
+        $finalAmount = $totalAmount - $discount ?? 0;
 
         $set('total_amount', number_format($totalAmount, 2, '.', ''));
         $set('final_amount', number_format($finalAmount, 2, '.', ''));

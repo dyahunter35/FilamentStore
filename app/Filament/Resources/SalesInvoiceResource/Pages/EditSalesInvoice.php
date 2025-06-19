@@ -16,4 +16,17 @@ class EditSalesInvoice extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $items = $data['items'] ?? [];
+        $totalAmount = collect($items)->sum('subtotal');
+        $discount = $data['discount'] ?? 0;
+        $finalAmount = $totalAmount - $discount;
+
+        return array_merge($data, [
+            'total_amount' => $totalAmount,
+            'final_amount' => $finalAmount,
+        ]);
+    }
 }
