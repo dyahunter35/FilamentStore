@@ -3,7 +3,7 @@
 return [
     // Navigation Labels
     'navigation' => [
-        'group' => 'Inventory Management',
+        'group' => 'Warehouse Management',
         'label' => 'Inventory Reconciliation',
         'plural_label' => 'Inventory Reconciliations',
     ],

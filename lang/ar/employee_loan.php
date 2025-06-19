@@ -6,6 +6,7 @@ return [
         'group' => 'إدارة الموظفين',
         'label' => 'قرض الموظف',
         'plural_label' => 'قروض الموظفين',
+        'model_label' => 'قرض الموظف',
     ],
 
     // Section headers

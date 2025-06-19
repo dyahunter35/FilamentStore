@@ -13,11 +13,19 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->string('employee_id')->unique();
+            $table->string('department');
+            $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->date('hire_date')->nullable();
+            $table->text('address')->nullable();
+            $table->text('emergency_contact')->nullable();
             $table->string('name');
             $table->string('position');
             $table->decimal('salary', 15, 2);
             $table->text('contact_info')->nullable();
-            $table->foreignId('branch_id')->constrained()->onDelete('cascade');
+            $table->enum('status', ['active', 'inactive','terminated'])->default('active');
+
             $table->timestamps();
         });
     }

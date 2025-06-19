@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductUnitResource extends Resource
 {
+    use \Filament\Resources\Concerns\Translatable;
     use \App\Filament\Pages\Concerns\HasResource;
 
     protected static ?string $model = ProductUnit::class;
@@ -35,6 +36,7 @@ class ProductUnitResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(100),
+
 
                         Forms\Components\TextInput::make('symbol')
                             ->required()

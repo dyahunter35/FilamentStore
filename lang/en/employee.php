@@ -6,6 +6,7 @@ return [
         'group' => 'Employee Management',
         'label' => 'Employee',
         'plural_label' => 'Employees',
+        'model_label' => 'Employee',
     ],
 
     // Section headers
@@ -26,6 +27,10 @@ return [
 
     // Form Field Labels
     'fields' => [
+        'employee_id' => [
+            'label' => 'Employee ID',
+            'placeholder' => 'Enter employee ID',
+        ],
         'name' => [
             'label' => 'Name',
             'placeholder' => 'Enter employee name',
@@ -77,6 +82,13 @@ return [
         'avatar' => [
             'label' => 'Avatar',
             'placeholder' => 'Upload avatar image',
+            'help_text' => 'Recommended size: 300x300 pixels',
+        ],
+        'notes' => [
+            'label' => 'Notes',
+            'placeholder' => 'Enter any additional notes',
+            'helper_text' => 'This field can be used to store additional information about the employee such as skills, achievements, or any other relevant details.',
+
         ],
         'created_at' => [
             'label' => 'Created At',

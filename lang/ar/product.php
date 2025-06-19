@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
     'navigation' => [
         'group' => 'إدارة المنتجات',
         'label' => 'المنتجات',
@@ -67,11 +67,11 @@ return [
             'label' => 'سعر البيع',
             'placeholder' => 'أدخل سعر البيع',
         ],
-        'minimum_stock' => [
+        'reorder_point' => [
             'label' => 'الحد الأدنى للمخزون',
             'placeholder' => 'أدخل الحد الأدنى للمخزون',
         ],
-        'current_stock' => [
+        'quantity' => [
             'label' => 'المخزون الحالي',
             'placeholder' => 'كمية المخزون الحالي',
         ],

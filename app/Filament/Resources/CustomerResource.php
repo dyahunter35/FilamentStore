@@ -27,11 +27,7 @@ class CustomerResource extends Resource
         static::translateConfigureForm();
         return $form
             ->schema([
-                Forms\Components\Select::make('branch_id')
-                    ->label('Branch')
-                    ->options(Branch::all()->pluck('name', 'id'))
-                    ->required()
-                    ->hiddenOn('edit'), // Branch should not be changed after creation
+
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -51,12 +47,10 @@ class CustomerResource extends Resource
 
     public static function table(Table $table): Table
     {
+        static::translateConfigureTable();
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('branch.name')
-                    ->label('Branch')
-                    ->sortable()
-                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),

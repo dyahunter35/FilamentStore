@@ -12,9 +12,9 @@ class EmployeeSeeder extends Seeder
         $employees = [
             [
                 'name' => 'Alice Johnson',
-                'email' => 'alice.johnson@company.com',
+                'email' => 'alice2.johnson@company.com',
                 'phone' => '+1-555-0301',
-                'employee_id' => 'EMP001',
+
                 'department' => 'Human Resources',
                 'position' => 'HR Manager',
                 'salary' => 75000.00,
@@ -27,7 +27,7 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Bob Smith',
                 'email' => 'bob.smith@company.com',
                 'phone' => '+1-555-0302',
-                'employee_id' => 'EMP002',
+
                 'department' => 'Information Technology',
                 'position' => 'Software Developer',
                 'salary' => 85000.00,
@@ -40,7 +40,7 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Carol Davis',
                 'email' => 'carol.davis@company.com',
                 'phone' => '+1-555-0303',
-                'employee_id' => 'EMP003',
+
                 'department' => 'Finance',
                 'position' => 'Accountant',
                 'salary' => 65000.00,
@@ -53,7 +53,7 @@ class EmployeeSeeder extends Seeder
                 'name' => 'David Wilson',
                 'email' => 'david.wilson@company.com',
                 'phone' => '+1-555-0304',
-                'employee_id' => 'EMP004',
+
                 'department' => 'Sales',
                 'position' => 'Sales Representative',
                 'salary' => 55000.00,
@@ -66,7 +66,7 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Eva Brown',
                 'email' => 'eva.brown@company.com',
                 'phone' => '+1-555-0305',
-                'employee_id' => 'EMP005',
+
                 'department' => 'Marketing',
                 'position' => 'Marketing Specialist',
                 'salary' => 60000.00,
@@ -79,7 +79,7 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Frank Miller',
                 'email' => 'frank.miller@company.com',
                 'phone' => '+1-555-0306',
-                'employee_id' => 'EMP006',
+
                 'department' => 'Operations',
                 'position' => 'Operations Manager',
                 'salary' => 80000.00,
@@ -92,7 +92,6 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Grace Taylor',
                 'email' => 'grace.taylor@company.com',
                 'phone' => '+1-555-0307',
-                'employee_id' => 'EMP007',
                 'department' => 'Customer Service',
                 'position' => 'Customer Service Representative',
                 'salary' => 45000.00,
@@ -103,8 +102,17 @@ class EmployeeSeeder extends Seeder
             ],
         ];
 
+        $branches = \App\Models\Branch::all();
+
         foreach ($employees as $employee) {
-            Employee::create($employee);
+            $employee = Employee::create($employee);
+
+            $randomBranches = $branches->random(rand(1, $branches->count()));
+            foreach ($randomBranches as $branch) {
+                $branch->employees()->attach($employee->id);
+            }
         }
+
+
     }
 }

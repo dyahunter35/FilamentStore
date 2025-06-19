@@ -53,11 +53,12 @@ class Branch extends Model
     {
         return $this->hasMany(Currency::class);
     }
-
+    
     public function employees()
     {
-        return $this->hasMany(Employee::class);
+        return $this->belongsToMany(Employee::class, 'employee_branches');
     }
+
 
     public function exchangeClients()
     {

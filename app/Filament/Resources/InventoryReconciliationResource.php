@@ -23,29 +23,24 @@ class InventoryReconciliationResource extends Resource
 
     public static function form(Form $form): Form
     {
+        static::translateConfigureForm();
         return $form
             ->schema([
                 Forms\Components\TextInput::make('reference')
-                    ->label('Reference')
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('date')
-                    ->label('Date')
                     ->required(),
                 Forms\Components\Repeater::make('items')
-                    ->label('Reconciliation Items')
                     ->relationship('items')
                     ->schema([
                         Forms\Components\Select::make('product_id')
-                            ->label('Product')
                             ->relationship('product', 'name')
                             ->required(),
                         Forms\Components\TextInput::make('system_quantity')
-                            ->label('System Quantity')
                             ->numeric()
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('actual_quantity')
-                            ->label('Actual Quantity')
                             ->numeric()
                             ->required()
                             ->afterStateUpdated(function ($state, callable $set, callable $get) {
@@ -53,19 +48,18 @@ class InventoryReconciliationResource extends Resource
                                 $set('difference', $state - $system);
                             }),
                         Forms\Components\TextInput::make('difference')
-                            ->label('Difference')
                             ->numeric()
                             ->disabled(),
                         Forms\Components\TextInput::make('notes')
-                            ->label('Notes')
                             ->maxLength(255),
                     ])
-                    ->createItemButtonLabel('Add Product'),
+
             ]);
     }
 
     public static function table(Table $table): Table
     {
+        static::translateConfigureTable();
         return $table
             ->columns([
                 //

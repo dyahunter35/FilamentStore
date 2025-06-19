@@ -3,7 +3,7 @@
 return [
     // Navigation Labels
     'navigation' => [
-        'group' => 'Payroll Management',
+        'group' => 'Employee Management',
         'label' => 'Payroll',
         'plural_label' => 'Payrolls',
     ],

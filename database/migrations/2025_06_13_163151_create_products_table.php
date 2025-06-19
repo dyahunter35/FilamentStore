@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Brand;
+use App\Models\ProductCategory;
+use App\Models\ProductUnit;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,8 +19,10 @@ return new class extends Migration
             $table->foreignId('branch_id')->constrained('branches')->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->foreignId('brand')->constrained('brands')->cascadeOnDelete();
-            $table->foreignId('unit')->constrained('product_units')->cascadeOnDelete();
+            $table->foreignIdFor(ProductCategory::class)->nullable();
+            $table->foreignIdFor(Brand::class)->nullable();
+            $table->foreignIdFor(ProductUnit::class,'unit_id')->nullable();
+            $table->foreignIdFor(ProductCategory::class,'category_id')->nullable();
             $table->decimal('price', 8, 2);
             $table->decimal('cost', 8, 2);
             $table->integer('quantity')->default(0);
@@ -25,6 +30,7 @@ return new class extends Migration
             $table->json('serial_numbers')->nullable();
             $table->enum('status', ['active', 'inactive', 'discontinued'])->default('active');
             $table->string('sku')->unique()->nullable();
+
             $table->timestamps();
         });
     }

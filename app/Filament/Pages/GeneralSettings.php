@@ -19,6 +19,8 @@ class GeneralSettings extends SettingsPage
 
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function getNavigationLabel(): string
     {
         return __('general_settings.navigation.label');
@@ -107,7 +109,7 @@ class GeneralSettings extends SettingsPage
 
                     Tab::make(__('setting.tabs.advertisement'))
                         ->schema([
-                            
+
                         ])->columns(2),
                     Tab::make(__('setting.tabs.contact'))
                         ->schema([

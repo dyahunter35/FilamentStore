@@ -10,6 +10,8 @@ class InventoryReport extends Page
 
     protected static string $view = 'filament.pages.inventory-report';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function getNavigationLabel(): string
     {
         return __('reports.navigations.inventory.label');

@@ -3,7 +3,7 @@
 return [
     // Navigation Labels
     'navigation' => [
-        'group' => 'إدارة المخزون',
+        'group' => 'إدارة المستودعات',
         'label' => 'تسوية المخزون',
         'plural_label' => 'تسويات المخزون',
     ],

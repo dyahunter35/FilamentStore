@@ -6,7 +6,9 @@ return [
         'group' => 'إدارة الموظفين',
         'label' => 'موظف',
         'plural_label' => 'الموظفون',
+        'model_label' => 'موظف',
     ],
+
 
     // Section headers
     'sections' => [
@@ -26,6 +28,10 @@ return [
 
     // Form Field Labels
     'fields' => [
+        'employee_id' => [
+            'label' => 'رقم الموظف',
+            'placeholder' => 'أدخل رقم الموظف',
+        ],
         'name' => [
             'label' => 'الاسم',
             'placeholder' => 'أدخل اسم الموظف',
@@ -77,6 +83,12 @@ return [
         'avatar' => [
             'label' => 'الصورة الشخصية',
             'placeholder' => 'رفع صورة شخصية',
+            'helper_text' => 'حجم الصورة الموصى به: 300x300 بكسل',
+        ],
+        'notes' => [
+            'label' => 'ملاحظات',
+            'placeholder' => 'أدخل ملاحظات إضافية',
+            'helper_text' => 'يمكن استخدام هذا الحقل لتخزين معلومات إضافية عن الموظف مثل المهارات أو الإنجازات أو أي تفاصيل أخرى ذات صلة.',
         ],
         'created_at' => [
             'label' => 'تاريخ الإنشاء',

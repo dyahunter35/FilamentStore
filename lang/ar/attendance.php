@@ -3,10 +3,10 @@
 return [
     // Navigation Labels
     'navigation' => [
-        'group' => 'إدارة الحضور',
+        'group' => 'إدارة الموظفين',
         'label' => 'حضور',
         'plural_label' => 'الحضور',
-        'model_'
+        'model_label' => 'حضور',
     ],
 
     // Section headers

@@ -6,6 +6,7 @@ return [
         'group' => 'إدارة المصروفات',
         'label' => 'فئة المصروفات',
         'plural_label' => 'فئات المصروفات',
+        'model_label' => 'فئة المصروفات',
     ],
 
     // Section headers

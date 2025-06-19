@@ -6,7 +6,8 @@ return [
         'group' => 'إدارة الفئات',
         'label' => 'فئة',
         'plural_label' => 'الفئات',
-        
+        'model_label' => 'فئة',
+
     ],
 
     // Section headers

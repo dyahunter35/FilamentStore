@@ -6,6 +6,7 @@ return [
         'group' => 'إدارة العملاء',
         'label' => 'عميل',
         'plural_label' => 'العملاء',
+        'model_label' => 'عميل',
     ],
 
     // Section headers
@@ -38,41 +39,13 @@ return [
             'label' => 'الهاتف',
             'placeholder' => 'أدخل رقم الهاتف',
         ],
-        'company' => [
-            'label' => 'الشركة',
-            'placeholder' => 'أدخل اسم الشركة',
-        ],
+
         'address' => [
             'label' => 'العنوان',
             'placeholder' => 'أدخل العنوان',
         ],
-        'city' => [
-            'label' => 'المدينة',
-            'placeholder' => 'أدخل المدينة',
-        ],
-        'state' => [
-            'label' => 'الولاية',
-            'placeholder' => 'أدخل الولاية',
-        ],
-        'country' => [
-            'label' => 'البلد',
-            'placeholder' => 'أدخل البلد',
-        ],
-        'postal_code' => [
-            'label' => 'الرمز البريدي',
-            'placeholder' => 'أدخل الرمز البريدي',
-        ],
-        'tax_number' => [
-            'label' => 'الرقم الضريبي',
-            'placeholder' => 'أدخل الرقم الضريبي',
-        ],
-        'status' => [
-            'label' => 'الحالة',
-            'options' => [
-                'active' => 'نشط',
-                'inactive' => 'غير نشط',
-            ],
-        ],
+
+
         'created_at' => [
             'label' => 'تاريخ الإنشاء',
             'placeholder' => ''

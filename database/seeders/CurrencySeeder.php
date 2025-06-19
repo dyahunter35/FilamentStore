@@ -11,6 +11,13 @@ class CurrencySeeder extends Seeder
     {
         $currencies = [
             [
+                'name' => 'Sudanese Pound',
+                'code' => 'SDG',
+                'symbol' => 'ج.س',
+                'exchange_rate' => 0.002,
+                'status' => 'active',
+            ],
+            [
                 'name' => 'US Dollar',
                 'code' => 'USD',
                 'symbol' => '$',
@@ -22,41 +29,6 @@ class CurrencySeeder extends Seeder
                 'code' => 'EUR',
                 'symbol' => '€',
                 'exchange_rate' => 0.85,
-                'status' => 'active',
-            ],
-            [
-                'name' => 'British Pound',
-                'code' => 'GBP',
-                'symbol' => '£',
-                'exchange_rate' => 0.73,
-                'status' => 'active',
-            ],
-            [
-                'name' => 'Japanese Yen',
-                'code' => 'JPY',
-                'symbol' => '¥',
-                'exchange_rate' => 110.00,
-                'status' => 'active',
-            ],
-            [
-                'name' => 'Canadian Dollar',
-                'code' => 'CAD',
-                'symbol' => 'C$',
-                'exchange_rate' => 1.25,
-                'status' => 'active',
-            ],
-            [
-                'name' => 'Australian Dollar',
-                'code' => 'AUD',
-                'symbol' => 'A$',
-                'exchange_rate' => 1.35,
-                'status' => 'active',
-            ],
-            [
-                'name' => 'Swiss Franc',
-                'code' => 'CHF',
-                'symbol' => 'Fr',
-                'exchange_rate' => 0.92,
                 'status' => 'active',
             ],
             [

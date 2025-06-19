@@ -12,7 +12,10 @@ class ProductUnitSeeder extends Seeder
         $units = [
             // Quantity Units
             [
-                'name' => 'Piece',
+                'name' => [
+                    'en' => 'Piece',
+                    'ar' => 'قطعة'
+                ],
                 'symbol' => 'pcs',
                 'abbreviation' => 'pc',
                 'type' => 'quantity',
@@ -22,7 +25,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Dozen',
+                'name' => [
+                    'en' => 'Dozen',
+                    'ar' => 'دزينة'
+                ],
                 'symbol' => 'doz',
                 'abbreviation' => 'dz',
                 'type' => 'quantity',
@@ -32,7 +38,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Gross',
+                'name' => [
+                    'en' => 'Gross',
+                    'ar' => 'جروس'
+                ],
                 'symbol' => 'gr',
                 'abbreviation' => 'grs',
                 'type' => 'quantity',
@@ -42,7 +51,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Pair',
+                'name' => [
+                    'en' => 'Pair',
+                    'ar' => 'زوج'
+                ],
                 'symbol' => 'pr',
                 'abbreviation' => 'pair',
                 'type' => 'quantity',
@@ -52,7 +64,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Set',
+                'name' => [
+                    'en' => 'Set',
+                    'ar' => 'طقم'
+                ],
                 'symbol' => 'set',
                 'abbreviation' => 'st',
                 'type' => 'quantity',
@@ -64,7 +79,10 @@ class ProductUnitSeeder extends Seeder
 
             // Weight Units
             [
-                'name' => 'Kilogram',
+                'name' => [
+                    'en' => 'Kilogram',
+                    'ar' => 'كيلوجرام'
+                ],
                 'symbol' => 'kg',
                 'abbreviation' => 'kg',
                 'type' => 'weight',
@@ -74,7 +92,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Gram',
+                'name' => [
+                    'en' => 'Gram',
+                    'ar' => 'جرام'
+                ],
                 'symbol' => 'g',
                 'abbreviation' => 'gm',
                 'type' => 'weight',
@@ -84,7 +105,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Pound',
+                'name' => [
+                    'en' => 'Pound',
+                    'ar' => 'باوند'
+                ],
                 'symbol' => 'lb',
                 'abbreviation' => 'lbs',
                 'type' => 'weight',
@@ -94,7 +118,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Ounce',
+                'name' => [
+                    'en' => 'Ounce',
+                    'ar' => 'أونصة'
+                ],
                 'symbol' => 'oz',
                 'abbreviation' => 'oz',
                 'type' => 'weight',
@@ -104,7 +131,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Ton',
+                'name' => [
+                    'en' => 'Ton',
+                    'ar' => 'طن'
+                ],
                 'symbol' => 't',
                 'abbreviation' => 'ton',
                 'type' => 'weight',
@@ -116,7 +146,10 @@ class ProductUnitSeeder extends Seeder
 
             // Volume Units
             [
-                'name' => 'Liter',
+                'name' => [
+                    'en' => 'Liter',
+                    'ar' => 'لتر'
+                ],
                 'symbol' => 'L',
                 'abbreviation' => 'ltr',
                 'type' => 'volume',
@@ -126,7 +159,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Milliliter',
+                'name' => [
+                    'en' => 'Milliliter',
+                    'ar' => 'مليلتر'
+                ],
                 'symbol' => 'mL',
                 'abbreviation' => 'ml',
                 'type' => 'volume',
@@ -136,7 +172,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Gallon',
+                'name' => [
+                    'en' => 'Gallon',
+                    'ar' => 'جالون'
+                ],
                 'symbol' => 'gal',
                 'abbreviation' => 'gal',
                 'type' => 'volume',
@@ -146,7 +185,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Cubic Meter',
+                'name' => [
+                    'en' => 'Cubic Meter',
+                    'ar' => 'متر مكعب'
+                ],
                 'symbol' => 'm³',
                 'abbreviation' => 'cbm',
                 'type' => 'volume',
@@ -158,7 +200,10 @@ class ProductUnitSeeder extends Seeder
 
             // Length Units
             [
-                'name' => 'Meter',
+                'name' => [
+                    'en' => 'Meter',
+                    'ar' => 'متر'
+                ],
                 'symbol' => 'm',
                 'abbreviation' => 'mtr',
                 'type' => 'length',
@@ -168,7 +213,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Centimeter',
+                'name' => [
+                    'en' => 'Centimeter',
+                    'ar' => 'سنتيمتر'
+                ],
                 'symbol' => 'cm',
                 'abbreviation' => 'cm',
                 'type' => 'length',
@@ -178,7 +226,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Millimeter',
+                'name' => [
+                    'en' => 'Millimeter',
+                    'ar' => 'مليمتر'
+                ],
                 'symbol' => 'mm',
                 'abbreviation' => 'mm',
                 'type' => 'length',
@@ -188,7 +239,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Inch',
+                'name' => [
+                    'en' => 'Inch',
+                    'ar' => 'بوصة'
+                ],
                 'symbol' => 'in',
                 'abbreviation' => 'inch',
                 'type' => 'length',
@@ -198,7 +252,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Foot',
+                'name' => [
+                    'en' => 'Foot',
+                    'ar' => 'قدم'
+                ],
                 'symbol' => 'ft',
                 'abbreviation' => 'ft',
                 'type' => 'length',
@@ -208,7 +265,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Yard',
+                'name' => [
+                    'en' => 'Yard',
+                    'ar' => 'ياردة'
+                ],
                 'symbol' => 'yd',
                 'abbreviation' => 'yd',
                 'type' => 'length',
@@ -220,7 +280,10 @@ class ProductUnitSeeder extends Seeder
 
             // Area Units
             [
-                'name' => 'Square Meter',
+                'name' => [
+                    'en' => 'Square Meter',
+                    'ar' => 'متر مربع'
+                ],
                 'symbol' => 'm²',
                 'abbreviation' => 'sqm',
                 'type' => 'area',
@@ -230,7 +293,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Square Foot',
+                'name' => [
+                    'en' => 'Square Foot',
+                    'ar' => 'قدم مربع'
+                ],
                 'symbol' => 'ft²',
                 'abbreviation' => 'sqft',
                 'type' => 'area',
@@ -242,7 +308,10 @@ class ProductUnitSeeder extends Seeder
 
             // Special Units
             [
-                'name' => 'Box',
+                'name' => [
+                    'en' => 'Box',
+                    'ar' => 'صندوق'
+                ],
                 'symbol' => 'box',
                 'abbreviation' => 'bx',
                 'type' => 'container',
@@ -252,7 +321,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Carton',
+                'name' => [
+                    'en' => 'Carton',
+                    'ar' => 'كرتون'
+                ],
                 'symbol' => 'ctn',
                 'abbreviation' => 'carton',
                 'type' => 'container',
@@ -262,7 +334,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Pallet',
+                'name' => [
+                    'en' => 'Pallet',
+                    'ar' => 'منصة'
+                ],
                 'symbol' => 'plt',
                 'abbreviation' => 'pallet',
                 'type' => 'container',
@@ -272,7 +347,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Roll',
+                'name' => [
+                    'en' => 'Roll',
+                    'ar' => 'لفة'
+                ],
                 'symbol' => 'roll',
                 'abbreviation' => 'rl',
                 'type' => 'special',
@@ -282,7 +360,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Sheet',
+                'name' => [
+                    'en' => 'Sheet',
+                    'ar' => 'ورقة'
+                ],
                 'symbol' => 'sht',
                 'abbreviation' => 'sheet',
                 'type' => 'special',
@@ -292,7 +373,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Ream',
+                'name' => [
+                    'en' => 'Ream',
+                    'ar' => 'رزمة'
+                ],
                 'symbol' => 'rm',
                 'abbreviation' => 'ream',
                 'type' => 'special',
@@ -302,7 +386,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Bundle',
+                'name' => [
+                    'en' => 'Bundle',
+                    'ar' => 'حزمة'
+                ],
                 'symbol' => 'bdl',
                 'abbreviation' => 'bundle',
                 'type' => 'special',
@@ -312,7 +399,10 @@ class ProductUnitSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'name' => 'Pack',
+                'name' => [
+                    'en' => 'Pack',
+                    'ar' => 'عبوة'
+                ],
                 'symbol' => 'pk',
                 'abbreviation' => 'pack',
                 'type' => 'container',

@@ -3,7 +3,7 @@
 return [
     // Navigation Labels
     'navigation' => [
-        'group' => 'إدارة كشوف الرواتب',
+        'group' => 'إدارة الموظفين',
         'label' => 'كشف راتب',
         'plural_label' => 'كشوف الرواتب',
     ],

@@ -29,7 +29,7 @@ class Dashboard extends BaseDashboard
     protected function getHeaderWidgets(): array
     {
         return [
-            DateRangeFilterWidget::class,
+            //DateRangeFilterWidget::class,
         ];
     }
 

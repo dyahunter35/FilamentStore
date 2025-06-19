@@ -13,31 +13,34 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // Core Data
+            ShieldSeeder::class,
+
             UserSeeder::class,
+            BranchSeeder::class,
             CurrencySeeder::class,
 
             // Business Entities
             CustomerSeeder::class,
-            SupplierSeeder::class,
+            //SupplierSeeder::class,
             EmployeeSeeder::class,
             // Products & Categories
             BrandSeeder::class,
             ProductUnitSeeder::class,
             ProductSeeder::class,
-            ExpenseCategorySeeder::class,
+            //ExpenseCategorySeeder::class,
             // Financial Data
-            ExpenseSeeder::class,
-            OtherRevenueSeeder::class,
+           // ExpenseSeeder::class,
+           // OtherRevenueSeeder::class,
 
             // Exchange & Currency
-            ExchangeClientSeeder::class,
-            CurrencyTransferSeeder::class,
-            ExchangeClientTransactionSeeder::class,
+            //ExchangeClientSeeder::class,
+            //CurrencyTransferSeeder::class,
+            //ExchangeClientTransactionSeeder::class,
 
             // HR & Payroll
-            AttendanceSeeder::class,
-            EmployeeLoanSeeder::class,
-            PayrollSeeder::class,
+            //AttendanceSeeder::class,
+            //EmployeeLoanSeeder::class,
+            //PayrollSeeder::class,
 
             // Note: Add these seeders when the corresponding models are created
             // SalesInvoiceSeeder::class,

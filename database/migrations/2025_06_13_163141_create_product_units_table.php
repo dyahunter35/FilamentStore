@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('product_units', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->json('name');
             $table->string('symbol')->nullable();
             $table->string('abbreviation')->nullable();
-            $table->enum('type', ['quantity', 'weight', 'volume', 'length', 'area'])->default('quantity');
+            $table->enum('type', ['quantity', 'weight', 'volume', 'length', 'area','container','special'])->default('quantity');
             $table->text('description')->nullable();
             $table->boolean('base_unit')->default(false);
             $table->decimal('conversion_factor', 10, 4)->default(1.0);

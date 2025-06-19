@@ -6,6 +6,7 @@ return [
         'group' => 'إدارة العملات',
         'label' => 'عملة',
         'plural_label' => 'العملات',
+        'model_label' => 'عملة',
     ],
 
     // Section headers

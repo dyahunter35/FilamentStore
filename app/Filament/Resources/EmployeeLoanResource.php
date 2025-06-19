@@ -19,12 +19,12 @@ class EmployeeLoanResource extends Resource
 
     protected static ?string $model = EmployeeLoan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
 
     public static function form(Form $form): Form
     {
         static::translateConfigureForm();
-        
+
         return $form
             ->schema([
                 Forms\Components\Select::make('employee_id')

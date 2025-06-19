@@ -6,6 +6,7 @@ return [
         'group' => 'إدارة الصرافة',
         'label' => 'معاملة الصرافة',
         'plural_label' => 'معاملات الصرافة',
+        'model_label' => 'معاملة الصرافة',
     ],
 
     // Section headers

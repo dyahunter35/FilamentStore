@@ -22,6 +22,8 @@ class Product extends Model implements HasMedia
         'reorder_point',
         'serial_numbers',
         'branch_id',
+        'category_id',
+        'brand_id',
         'barcode',
     ];
 
@@ -43,10 +45,17 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(ProductUnit::class);
     }
 
+
     public function isLowStock(): bool
     {
         return $this->quantity <= $this->reorder_point;
     }
+
+    public function category() : BelongsTo
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
+
 
     public function getStockStatus(): string
     {

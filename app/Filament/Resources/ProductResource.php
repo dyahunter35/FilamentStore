@@ -15,6 +15,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Branch;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Illuminate\Support\HtmlString;
+use Milon\Barcode\DNS1D;
+use Picqer\Barcode\BarcodeGeneratorPNG;
+use Picqer\Barcode\BarcodeGeneratorSVG;
 
 class ProductResource extends Resource
 {
@@ -22,7 +27,7 @@ class ProductResource extends Resource
 
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Form $form): Form
     {
@@ -43,13 +48,20 @@ class ProductResource extends Resource
                                             ->maxLength(255),
                                         Forms\Components\Textarea::make('description')
                                             ->maxLength(65535),
-
+                                        Forms\Components\Select::make('category_id')
+                                            ->label(__('product.fields.category_id.label'))
+                                            ->relationship('category', 'name')
+                                            ->required()
+                                            ->searchable()
+                                            ->preload(),
                                         Forms\Components\Select::make('brand_id')
+                                            ->label(__('product.fields.brand_id.label'))
                                             ->relationship('brand', 'name')
                                             ->required()
                                             ->searchable()
                                             ->preload(),
                                         Forms\Components\Select::make('unit_id')
+                                            ->label(__('product.fields.unit_id.label'))
                                             ->relationship('unit', 'name')
                                             ->required()
                                             ->searchable()
@@ -78,7 +90,6 @@ class ProductResource extends Resource
                                             ->numeric()
                                             ->nullable(),
                                         Forms\Components\TextInput::make('barcode')
-                                            ->label('Barcode')
                                             ->unique(ignoreRecord: true)
                                             ->nullable()
                                             ->maxLength(255),
@@ -96,9 +107,7 @@ class ProductResource extends Resource
                     ->schema([
                         SpatieMediaLibraryFileUpload::make('image')
                             ->label(__('product.fields.image.label'))
-                            ->image()
                             ->collection('product_images')
-                            ->imageEditor()
                             ->columnSpanFull(),
                         /* Forms\Components\Toggle::make('is_active')
                             ->label('Active')
@@ -112,28 +121,43 @@ class ProductResource extends Resource
 
     public static function table(Table $table): Table
     {
+        static::translateConfigureTable();
+
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('brand.name')
-                    ->sortable()
-                    ->searchable(),
+
+                SpatieMediaLibraryImageColumn::make('image')
+                    ->collection('product_images')
+                    ->label(__('product.fields.image.label'))
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('barcode')
-                    ->label('Barcode')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(),
+
+
+
                 Tables\Columns\TextColumn::make('price')
-                    ->money('USD') // Assuming USD, change as needed
+                    ->money('SDG') // Assuming USD, change as needed
                     ->sortable(),
                 Tables\Columns\TextColumn::make('cost')
-                    ->money('USD') // Assuming USD, change as needed
+                    ->money('SDG') // Assuming USD, change as needed
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('brand.name')
+                    ->label(__('product.fields.brand_id.label'))
+
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('barcode')
+                    ->formatStateUsing(function ($state) {
+                        $generator = new BarcodeGeneratorPNG();
+                        $barcodeData = $generator->getBarcode($state, $generator::TYPE_EAN_13);
+                        return '<img src="data:image/png;base64,' . base64_encode($barcodeData) . '" alt="barcode" style="height: 40px;"/>';
+                    })
+                    ->html()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('reorder_point')
                     ->numeric()
                     ->sortable()

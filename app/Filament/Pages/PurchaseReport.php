@@ -10,6 +10,8 @@ class PurchaseReport extends Page
 
     protected static string $view = 'filament.pages.purchase-report';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function getNavigationLabel(): string
     {
         return __('reports.navigations.purchases.label');

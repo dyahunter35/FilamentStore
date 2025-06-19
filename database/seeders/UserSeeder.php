@@ -11,14 +11,17 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Create admin user
-        User::create([
+        $admin = User::create([
             'name' => 'Admin User',
-            'email' => 'admin@example.com',
+            'email' => 'admin@admin.com',
             'phone' => '+1234567890',
             'password' => Hash::make('password'),
             'status' => 'active',
             'email_verified_at' => now(),
         ]);
+
+        // Assign admin role
+        $admin->assignRole('super_admin');
 
         // Create regular users
         User::create([
@@ -56,5 +59,11 @@ class UserSeeder extends Seeder
             'status' => 'suspended',
             'email_verified_at' => now(),
         ]);
+
+        foreach(User::all() as $user) {
+            $user->assignRole('user');
+        }
+
+
     }
 }

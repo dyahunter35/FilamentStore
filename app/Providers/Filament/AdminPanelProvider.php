@@ -50,7 +50,7 @@ class AdminPanelProvider extends PanelProvider
                 'name'
             )
             ->tenantRegistration(RegisterBranch::class)
-            ->tenantProfile(EditBranchProfiles::class)
+            // ->tenantProfile(EditBranchProfiles::class)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -103,7 +103,11 @@ class AdminPanelProvider extends PanelProvider
                         'default' => 1,
                         'sm' => 2,
                     ]),
-            ])->plugin(\TomatoPHP\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin::make())
+                SpatieLaravelTranslatablePlugin::make()
+                    ->defaultLocales(['en', 'ar']),
+            ])->plugin(
+                \TomatoPHP\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin::make()
+            )
 
             ->authMiddleware([
                 Authenticate::class,

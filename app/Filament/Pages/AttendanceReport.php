@@ -19,6 +19,8 @@ class AttendanceReport extends Page
     public $selectedWeek;
     public $attendances = [];
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function getNavigationLabel(): string
     {
         return __('reports.navigations.attendence.label');
