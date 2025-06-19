@@ -43,10 +43,7 @@ return [
             'label' => 'Phone',
             'placeholder' => 'Enter phone number',
         ],
-        'employee_id' => [
-            'label' => 'Employee ID',
-            'placeholder' => 'Enter employee ID',
-        ],
+       
         'department' => [
             'label' => 'Department',
             'placeholder' => 'Enter department',
@@ -89,6 +86,10 @@ return [
             'placeholder' => 'Enter any additional notes',
             'helper_text' => 'This field can be used to store additional information about the employee such as skills, achievements, or any other relevant details.',
 
+        ],
+        'branches' => [
+            'label' => 'Branches',
+            'placeholder' => 'Select branches',
         ],
         'created_at' => [
             'label' => 'Created At',

@@ -42,7 +42,6 @@ class EmployeeResource extends Resource
                                     ->required()
                                     ->default(fn() => Employee::generateEmpoloyeeNumber())
                                     ->maxLength(255)
-                                    ->label(__('employee.fields.employee_id.label'))
                                     ->disabled()
                                     ->unique(ignoreRecord: true),
                                 Forms\Components\TextInput::make('name')
@@ -130,6 +129,7 @@ class EmployeeResource extends Resource
                     ->circular()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('employee_id')
+                    ->label(__('employee.fields.employee_id.label'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
@@ -141,6 +141,7 @@ class EmployeeResource extends Resource
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
                  Tables\Columns\TextColumn::make('branches.name')
+                    ->label(__('employee.fields.branches.label'))
                     ->badge()
                     ->searchable()
                     ->sortable(),
