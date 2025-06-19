@@ -3,29 +3,34 @@
 return [
     'navigation' => [
         'group' => 'Warehouse Management',
-        'label' => 'Brand',
-        'plural_label' => 'Brands',
+        'label' => 'Branches',
+        'plural_label' => 'Branches',
+        'model_label' => 'Branch',
     ],
 
     'breadcrumbs' => [
-        'index' => 'Brands',
-        'create' => 'Create Brand',
-        'edit' => 'Edit Brand',
+        'index' => 'Branches',
+        'create' => 'Create Branch',
+        'edit' => 'Edit Branch',
     ],
 
     'fields' => [
         'name' => [
-            'label' => 'Brand Name',
-            'placeholder' => 'Enter brand name',
+            'label' => 'Branch Name',
+            'placeholder' => 'Enter branch name',
+        ],
+        'slug' => [
+            'label' => 'Slug',
+            'placeholder' => 'Enter branch slug',
         ],
         'location' => [
             'label' => 'Location',
-            'placeholder' => 'Enter brand location',
+            'placeholder' => 'Enter branch location',
         ],
         'members' => [
             'label' => 'Members',
-            'placeholder' => 'Select members',
+            'placeholder' => 'Choose members',
         ],
-
     ]
 ];
+

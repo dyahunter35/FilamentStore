@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SalesInvoice extends Model
 {
     use HasFactory;
-
+    use \App\Traits\GenerateId;
     protected $fillable = [
         'customer_id',
         'date',
@@ -18,6 +18,7 @@ class SalesInvoice extends Model
         'final_amount',
         'status',
         'branch_id',
+        'invoice_number',
     ];
 
     protected $casts = [
@@ -26,6 +27,18 @@ class SalesInvoice extends Model
         'discount' => 'decimal:2',
         'final_amount' => 'decimal:2',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($salesInvoice) {
+            $salesInvoice->invoice_number = self::generateInvoiceNumber();
+        });
+    }
+    public static function generateInvoiceNumber(): string
+    {
+        return (new self())->generateUniqueNumber('INV-', 'invoice_number');
+    }
+
 
     public function branch(): BelongsTo
     {

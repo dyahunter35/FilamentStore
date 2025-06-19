@@ -13,17 +13,20 @@ class BranchSeeder extends Seeder
     public function run(): void
     {
         \App\Models\Branch::create([
-            'name' => 'Main-Branch',
+            'name' => 'Main Branch',
+            'slug' => 'main-branch',
             'location' => '123 Main St, City, Country',
             'enable' => true,
         ]);
         \App\Models\Branch::create([
-            'name' => 'Secondary-Branch',
+            'name' => 'Secondary Branch',
+            'slug' => 'secondary-branch',
             'location' => '456 Secondary St, City, Country',
             'enable' => true,
         ]);
         \App\Models\Branch::create([
-            'name' => 'Tertiary-Branch',
+            'name' => 'Tertiary Branch',
+            'slug' => 'tertiary-branch',
             'location' => '789 Tertiary St, City, Country',
             'enable' => true,
         ]);

@@ -15,9 +15,10 @@ return [
 
     // Section headers
     'sections' => [
-        'base_information' => [
-            'title' => 'المعلومات الأساسية',
+        'items' => [
+            'title' => 'عناصر الفاتورة',
         ],
+
         'invoice_details' => [
             'title' => 'تفاصيل الفاتورة'
         ],

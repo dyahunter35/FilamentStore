@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BranchResource\Pages;
 use App\Filament\Resources\BranchResource\RelationManagers;
 use App\Models\Branch;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -21,6 +22,11 @@ class BranchResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static bool $isScopedToTenant = false;
+
+    protected static bool $shouldRegisterNavigation = true;
+
+
     public static function form(Form $form): Form
     {
         static::translateConfigureForm();
@@ -28,10 +34,23 @@ class BranchResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->live()
+                    ->afterStateUpdated(function (Forms\Components\TextInput $component, $state, $set) {
+                        $set('slug', str()->slug($state));
+                    })
                     ->maxLength(255),
+                Forms\Components\TextInput::make('slug')
+                    ->required()
+                    ->dehydrated()
+                    ->maxLength(255)
+                    ->disabled()
+                    ->unique(Branch::class, 'slug', ignoreRecord: true)
+                    ->live()
+                    ,
                 Forms\Components\TextInput::make('location')
                     ->maxLength(255)
                     ->default(null),
+
                 Forms\Components\Select::make('members')
                     ->relationship('members', 'name')
                     ->multiple()

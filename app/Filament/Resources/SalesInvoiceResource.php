@@ -29,28 +29,23 @@ use Illuminate\Support\HtmlString;
 class SalesInvoiceResource extends Resource
 {
     use \App\Filament\Pages\Concerns\HasResource;
-    
+
     protected static ?string $model = SalesInvoice::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     public static function form(Form $form): Form
     {
+        //dd(static::getLocalePath());
         static::translateConfigureForm();
 
         return $form
             ->schema([
-                Section::make('Invoice Details')
+                Section::make(__('sales_invoice.sections.invoice_details'))
                     ->schema([
                         Grid::make(2)
                             ->schema([
-                                Forms\Components\Select::make('branch_id')
-                                    ->label('Branch')
-                                    ->options(Branch::all()->pluck('name', 'id'))
-                                    ->required()
-                                    ->hiddenOn('edit'), // Branch should not be changed after creation
                                 Forms\Components\Select::make('customer_id')
-                                    ->label('Customer')
                                     ->options(Customer::all()->pluck('name', 'id'))
                                     ->nullable()
                                     ->searchable(),
@@ -68,13 +63,13 @@ class SalesInvoiceResource extends Resource
                             ]),
                     ]),
 
-                Section::make('Invoice Items')
+                Section::make(__('sales_invoice.sections.items'))
                     ->schema([
                         Repeater::make('items')
+
                             ->relationship('items') // Assuming a hasMany relationship named 'items' in SalesInvoice model
                             ->schema([
                                 Select::make('product_id')
-                                    ->label('Product')
                                     ->options(Product::all()->pluck('name', 'id'))
                                     ->required()
                                     ->reactive()
@@ -112,11 +107,11 @@ class SalesInvoiceResource extends Resource
                             ->columnSpanFull()
                             ->live()
                             ->afterStateUpdated(function (Get $get, Set $set) {
-                                $this->updateTotals($get, $set);
+                                self::updateTotals($get, $set);
                             })
                             ->deleteAction(function (Forms\Components\Actions\Action $action, Get $get, Set $set) {
                                 $action->before(function () use ($get, $set) {
-                                    $this->updateTotals($get, $set);
+                                    self::updateTotals($get, $set);
                                 });
                             }),
                     ]),
@@ -125,6 +120,7 @@ class SalesInvoiceResource extends Resource
                     ->schema([
                         TextInput::make('total_amount')
                             ->required()
+                            ->dehydrated(true)
                             ->numeric()
                             ->prefix('$')
                             ->disabled(),
@@ -135,7 +131,7 @@ class SalesInvoiceResource extends Resource
                             ->prefix('$')
                             ->live()
                             ->afterStateUpdated(function (Get $get, Set $set) {
-                                $this->updateTotals($get, $set);
+                                self::updateTotals($get, $set);
                             }),
                         TextInput::make('final_amount')
                             ->required()

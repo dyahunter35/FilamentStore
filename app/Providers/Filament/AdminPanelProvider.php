@@ -37,7 +37,7 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        return $panel
+        $panel =  $panel
             ->default()
             ->id('admin')
             ->path('/')
@@ -47,10 +47,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->tenant(
                 Branch::class,
-                'name'
+                'slug'
             )
-            ->tenantRegistration(RegisterBranch::class)
-            // ->tenantProfile(EditBranchProfiles::class)
+
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -112,5 +111,14 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+
+        // تأكد أن المستخدم الحالي موجود وأن لديه صلاحية "create_branch"
+        if (auth()->check() && auth()->user()->can('create_branch')) {
+            $panel->tenantRegistration(RegisterBranch::class)
+                ->tenantProfile(EditBranchProfiles::class)
+                ;
+        }
+
+        return $panel;
     }
 }

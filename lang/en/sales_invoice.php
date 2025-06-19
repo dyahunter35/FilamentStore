@@ -10,8 +10,8 @@ return [
 
     // Section headers
     'sections' => [
-        'base_information' => [
-            'title' => 'Base Information',
+        'items' => [
+            'title' => 'Invoice Items',
         ],
         'invoice_details' => [
             'title' => 'Invoice Details'
