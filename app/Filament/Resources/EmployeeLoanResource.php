@@ -47,6 +47,7 @@ class EmployeeLoanResource extends Resource
 
     public static function table(Table $table): Table
     {
+        static::translateConfigureTable();
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('employee.name')->label('Employee'),

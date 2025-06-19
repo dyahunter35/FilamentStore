@@ -121,6 +121,7 @@ class EmployeeResource extends Resource
 
     public static function table(Table $table): Table
     {
+        static::translateConfigureTable();
         return $table
             ->columns([
                 SpatieMediaLibraryImageColumn::make('avatar')
